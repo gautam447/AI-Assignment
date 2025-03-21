@@ -47,17 +47,35 @@
 # Challenges Encountered
 
 -> Fine-tuning required careful selection of trainable layers to avoid overfitting.
+
+
 ->  Data augmentation significantly improved model generalization but increased training time.
+
+
 ->  Hyperparameter tuning (dropout rates, learning rate) played a crucial role in model stability.
+
+
 
 # Results
 -> Achieved competitive accuracy on the CIFAR-10 test set.
+
+
 -> Model successfully classifies images into 10 categories with improved robustness.
+
+
 -> Visualization of training history and confusion matrix provides insights into performance.
+
+
 
 # Future Improvements
 -> Experiment with different pre-trained models like ResNet50 or EfficientNet.
+
+
 -> Implement learning rate scheduling for better convergence.
+
+
 ->  Apply advanced regularization techniques to reduce overfitting further.
+
+
 
 
