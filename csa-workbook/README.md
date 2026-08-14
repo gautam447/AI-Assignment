@@ -4,15 +4,14 @@
 
 Aligned to the official **CSA Mainline Exam Blueprint (updated January 2026)**.
 
-## Graphical PDF (print / tablet)
+## Start here — the easy textbook (PDF)
 
-Download this first if you want Canva-style student notes:
+**[Download ServiceNow-CSA-Easy-Book.pdf](ServiceNow-CSA-Easy-Book.pdf)** — 21 chapters, plain English, stories, examples, and exam traps for every CSA topic.
 
-**[ServiceNow-CSA-Visual-Study-Notes.pdf](ServiceNow-CSA-Visual-Study-Notes.pdf)** — 15 A4 pages, color-coded by domain, sticky notes, flow diagrams, exam traps.
+Also available: a 15-page colour revision pack **[ServiceNow-CSA-Visual-Study-Notes.pdf](ServiceNow-CSA-Visual-Study-Notes.pdf)** for last-week skim.
 
-![Cover](pdf/preview-cover.png)
+![Easy book cover](pdf/preview-easy-cover.png)
 
-Rebuild from HTML (optional): `python3 pdf/build_visual_notes.py` then print `pdf/csa-visual-notes.html` to PDF.
 
 ---
 

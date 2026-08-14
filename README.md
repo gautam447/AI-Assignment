@@ -1,7 +1,9 @@
 Also in this repository:
 
-- Graphical PDF study notes: **[csa-workbook/ServiceNow-CSA-Visual-Study-Notes.pdf](csa-workbook/ServiceNow-CSA-Visual-Study-Notes.pdf)**
-- Full markdown workbook: **[csa-workbook/README.md](csa-workbook/README.md)**
+- Easy textbook PDF: **[csa-workbook/ServiceNow-CSA-Easy-Book.pdf](csa-workbook/ServiceNow-CSA-Easy-Book.pdf)**
+- Colour revision PDF: **[csa-workbook/ServiceNow-CSA-Visual-Study-Notes.pdf](csa-workbook/ServiceNow-CSA-Visual-Study-Notes.pdf)**
+- Markdown chapters: **[csa-workbook/README.md](csa-workbook/README.md)**
+
 
 # Image Classification with Transfer Learning
 
