@@ -1,0 +1,915 @@
+#!/usr/bin/env python3
+"""Generate Canva/sketchnote-style CSA visual study notes HTML."""
+from pathlib import Path
+
+OUT = Path(__file__).parent / "csa-visual-notes.html"
+
+
+def page(inner, cls=""):
+    return f'<section class="page {cls}">{inner}</section>'
+
+
+def h(title, sub=""):
+    sub_html = f'<p class="page-sub">{sub}</p>' if sub else ""
+    return f'<div class="page-head"><h1>{title}</h1>{sub_html}</div>'
+
+
+def tape(text, color="mint"):
+    return f'<span class="tape tape-{color}">{text}</span>'
+
+
+def sticky(title, body, color="yellow"):
+    return f"""<div class="sticky sticky-{color}">
+      <div class="sticky-title">{title}</div>
+      <div class="sticky-body">{body}</div>
+    </div>"""
+
+
+def callout(kind, title, body):
+    icons = {"exam": "✏️", "trap": "⚠️", "gold": "⭐", "lab": "🧪", "tip": "💡"}
+    return f"""<div class="callout callout-{kind}">
+      <div class="callout-kicker">{icons.get(kind, "•")} {title}</div>
+      <div>{body}</div>
+    </div>"""
+
+
+def chips(items):
+    return '<div class="chips">' + "".join(f'<span class="chip">{i}</span>' for i in items) + "</div>"
+
+
+def kv_table(rows, head=None):
+    th = ""
+    if head:
+        th = "<tr>" + "".join(f"<th>{c}</th>" for c in head) + "</tr>"
+    body = "".join("<tr>" + "".join(f"<td>{c}</td>" for c in r) + "</tr>" for r in rows)
+    return f'<table class="pretty">{th}{body}</table>'
+
+
+html = []
+
+html.append(r"""<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>ServiceNow CSA Visual Study Notes</title>
+<link rel="stylesheet" href="fonts.css"/>
+<style>
+  :root {
+    --paper: #fff8ef;
+    --ink: #1e293b;
+    --muted: #475569;
+    --rule: #ead9c4;
+    --d1: #0d9488; --d1s: #ccfbf1;
+    --d2: #4f46e5; --d2s: #e0e7ff;
+    --d3: #d97706; --d3s: #fef3c7;
+    --d4: #e11d48; --d4s: #ffe4e6;
+    --d5: #7c3aed; --d5s: #ede9fe;
+    --d6: #0284c7; --d6s: #e0f2fe;
+    --gold: #f59e0b;
+    --trap: #dc2626;
+    --ok: #059669;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #e8dfd2; color: var(--ink);
+    font-family: 'Nunito', 'Noto Sans', sans-serif; font-size: 11.2pt; line-height: 1.35; }
+  @page { size: A4; margin: 9mm 9mm 11mm 9mm; }
+  @media print {
+    html, body { background: white; }
+    .page {
+      box-shadow: none; margin: 0 0 0 0; width: auto;
+      min-height: 0; height: auto; overflow: visible;
+      page-break-after: always; break-after: page; break-inside: auto;
+    }
+    .page:last-child { page-break-after: auto; break-after: auto; }
+  }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .page {
+    width: 192mm; min-height: 0; margin: 8px auto; background:
+      radial-gradient(circle at 12% 8%, rgba(244,114,182,.12), transparent 28%),
+      radial-gradient(circle at 90% 4%, rgba(125,211,252,.16), transparent 26%),
+      radial-gradient(circle at 80% 90%, rgba(167,139,250,.12), transparent 30%),
+      repeating-linear-gradient(transparent, transparent 27px, rgba(234,217,196,.35) 28px),
+      var(--paper);
+    padding: 8mm 9mm 8mm; position: relative;
+    box-shadow: 0 10px 30px rgba(30,41,59,.12); overflow: visible;
+    border: 2px dashed rgba(180,140,100,.28); border-radius: 14px;
+  }
+  .page-head { margin: 0 0 8px; }
+  .page-head h1 {
+    font-family: 'Fredoka', 'Nunito', sans-serif; font-size: 22pt; margin: 0;
+    letter-spacing: -.02em; color: #0f172a;
+  }
+  .page-sub { font-family: 'Caveat', cursive; font-size: 16pt; color: #b45309; margin: 2px 0 0; }
+  h2 { font-family: 'Fredoka', sans-serif; font-size: 13.5pt; margin: 10px 0 6px; }
+  h3 { font-size: 11pt; margin: 8px 0 4px; }
+  p { margin: 0 0 6px; }
+  .hand { font-family: 'Caveat', 'Patrick Hand', cursive; }
+  .mono { font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 9.5pt; }
+  .row { display: flex; gap: 8px; align-items: stretch; }
+  .wrap { display: flex; flex-wrap: wrap; gap: 8px; }
+  .col { flex: 1; min-width: 0; }
+  .col-2 { flex: 2; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+  .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 7px; }
+  .card {
+    background: #fff; border: 2px solid #1e293b; border-radius: 14px;
+    padding: 8px 10px; box-shadow: 3px 3px 0 #1e293b; position: relative;
+  }
+  .card.soft { box-shadow: 3px 3px 0 rgba(30,41,59,.18); border-width: 1.5px; }
+  .card h3 { margin-top: 0; }
+  .tint-d1 { background: var(--d1s); border-color: var(--d1); }
+  .tint-d2 { background: var(--d2s); border-color: var(--d2); }
+  .tint-d3 { background: var(--d3s); border-color: var(--d3); }
+  .tint-d4 { background: var(--d4s); border-color: var(--d4); }
+  .tint-d5 { background: var(--d5s); border-color: var(--d5); }
+  .tint-d6 { background: var(--d6s); border-color: var(--d6); }
+  .tint-ok { background: #d1fae5; border-color: var(--ok); }
+  .tint-trap { background: #fee2e2; border-color: var(--trap); }
+  .tint-gold { background: #fef3c7; border-color: var(--gold); }
+  .tint-ink { background: #0f172a; color: #fff; border-color: #0f172a; }
+  .tint-ink h3, .tint-ink .hand { color: #fde68a; }
+  .badge {
+    display: inline-block; font-size: 8.5pt; font-weight: 800; padding: 2px 8px;
+    border-radius: 999px; background: #0f172a; color: #fff; letter-spacing: .04em;
+  }
+  .weight {
+    font-family: 'Fredoka', sans-serif; font-size: 28pt; line-height: 1; color: #fff;
+  }
+  .tape {
+    display: inline-block; padding: 2px 12px; font-family: 'Caveat', cursive; font-size: 15pt;
+    transform: rotate(-2deg); box-shadow: 0 2px 0 rgba(0,0,0,.08);
+  }
+  .tape-mint { background: #99f6e4; }
+  .tape-pink { background: #fecdd3; }
+  .tape-lemon { background: #fde047; }
+  .tape-lilac { background: #ddd6fe; }
+  .tape-sky { background: #bae6fd; }
+  .sticky {
+    border-radius: 2px 12px 12px 12px; padding: 8px 10px; box-shadow: 2px 3px 0 rgba(0,0,0,.12);
+    transform: rotate(-1.2deg);
+  }
+  .sticky-yellow { background: #fef08a; }
+  .sticky-pink { background: #fda4af; }
+  .sticky-green { background: #86efac; }
+  .sticky-blue { background: #7dd3fc; }
+  .sticky-title { font-family: 'Fredoka', sans-serif; font-size: 10.5pt; }
+  .sticky-body { font-size: 10pt; }
+  .callout { border-left: 7px solid; padding: 7px 10px; border-radius: 0 12px 12px 0; margin: 7px 0; }
+  .callout-exam { background: #fef9c3; border-color: #ca8a04; }
+  .callout-trap { background: #fee2e2; border-color: #dc2626; }
+  .callout-gold { background: #ede9fe; border-color: #7c3aed; }
+  .callout-lab { background: #d1fae5; border-color: #059669; }
+  .callout-tip { background: #e0f2fe; border-color: #0284c7; }
+  .callout-kicker { font-weight: 800; font-size: 10pt; margin-bottom: 2px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 5px; }
+  .chip {
+    background: #fff; border: 1.5px solid #1e293b; border-radius: 999px;
+    padding: 2px 8px; font-size: 9.5pt; font-weight: 700;
+  }
+  table.pretty { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 9.6pt;
+    overflow: hidden; border-radius: 10px; border: 1.5px solid #1e293b; }
+  table.pretty th { background: #0f172a; color: #fff; text-align: left; padding: 5px 7px; }
+  table.pretty td { padding: 4px 7px; border-top: 1px solid #e2e8f0; vertical-align: top; }
+  table.pretty tr:nth-child(even) td { background: #fff7ed; }
+  ul.tight { margin: 0; padding-left: 16px; }
+  ul.tight li { margin: 0 0 3px; }
+  .flow { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+  .flow .node {
+    background: #fff; border: 2px solid #1e293b; border-radius: 12px; padding: 6px 10px;
+    font-weight: 800; font-size: 10pt; text-align: center; box-shadow: 2px 2px 0 #1e293b;
+  }
+  .arrow { font-size: 16pt; color: #b45309; font-family: 'Fredoka', sans-serif; }
+  .hl { background: linear-gradient(transparent 55%, #fde047 55%); padding: 0 2px; }
+  .hl-pink { background: linear-gradient(transparent 55%, #fda4af 55%); }
+  .hl-mint { background: linear-gradient(transparent 55%, #5eead4 55%); }
+  .footer-note {
+    font-family: 'Caveat', cursive; font-size: 12pt; color: #92400e;
+    display: flex; justify-content: space-between; margin-top: 10px;
+    border-top: 1px dashed rgba(180,140,100,.45); padding-top: 4px;
+  }
+  .cover-blob { position: absolute; border-radius: 50%; filter: blur(2px); opacity: .85; }
+  .big-num { font-family: 'Fredoka', sans-serif; font-size: 42pt; line-height: .9; }
+  .bar { height: 18px; border-radius: 999px; border: 1.5px solid #1e293b; display: flex; overflow: hidden; }
+  .bar span { display: block; height: 100%; }
+  .eq { display: grid; grid-template-columns: 1fr 28px 1fr; gap: 6px; align-items: stretch; }
+  .eq .vs { font-family: 'Fredoka'; font-size: 14pt; display: flex; align-items: center; justify-content: center; }
+  .mini { font-size: 9.4pt; }
+  .sketch-arrow { width: 100%; height: 18px; }
+  .donut-wrap { text-align: center; }
+  .kicker { font-size: 8.5pt; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: #64748b; }
+  svg.icon { vertical-align: -2px; }
+</style>
+</head>
+<body>
+""")
+
+# COVER
+html.append(page(f"""
+  <div class="cover-blob" style="width:160px;height:160px;background:#fde68a;top:-20px;left:-20px;"></div>
+  <div class="cover-blob" style="width:180px;height:180px;background:#c4b5fd;top:40px;right:-40px;"></div>
+  <div class="cover-blob" style="width:140px;height:140px;background:#99f6e4;bottom:40px;left:30px;"></div>
+  {tape("student revision pack  ·  Jan 2026 blueprint", "lemon")}
+  <p class="hand" style="font-size:22pt;margin:18px 0 0;color:#7c3aed;">ServiceNow</p>
+  <h1 style="font-size:34pt;line-height:.95;margin:0 0 6px;">CSA Visual<br>Study Notes</h1>
+  <p class="hand" style="font-size:20pt;color:#b45309;margin:0 0 16px;">highly graphical · exam-weighted · sketchnote style</p>
+  <div class="grid-4">
+    <div class="card tint-ink" style="text-align:center;"><div class="big-num">60</div><div>questions</div></div>
+    <div class="card tint-gold" style="text-align:center;"><div class="big-num" style="color:#92400e;">90</div><div>minutes</div></div>
+    <div class="card tint-d5" style="text-align:center;"><div class="big-num" style="color:#5b21b6;">6</div><div>domains</div></div>
+    <div class="card tint-ok" style="text-align:center;"><div class="big-num" style="color:#065f46;">0</div><div>partial credit</div></div>
+  </div>
+  <div class="card soft" style="margin-top:14px;">
+    <div class="kicker">color legend — memorize this palette</div>
+    <div class="grid-3" style="margin-top:8px;">
+      <div><span class="chip" style="background:#ccfbf1;border-color:#0d9488;">D1 teal 7%</span> Platform</div>
+      <div><span class="chip" style="background:#e0e7ff;border-color:#4f46e5;">D2 indigo 10%</span> Instance</div>
+      <div><span class="chip" style="background:#fef3c7;border-color:#d97706;">D3 amber 20%</span> Collaborate</div>
+      <div><span class="chip" style="background:#ffe4e6;border-color:#e11d48;">D4 rose 20%</span> Self-service</div>
+      <div><span class="chip" style="background:#ede9fe;border-color:#7c3aed;">D5 violet 30%</span> Data + security</div>
+      <div><span class="chip" style="background:#e0f2fe;border-color:#0284c7;">D6 sky 13%</span> Logic + move</div>
+    </div>
+  </div>
+  <div class="callout callout-exam" style="margin-top:14px;">
+    <div class="callout-kicker">✏️ how to use these notes</div>
+    Study <b>violet first</b> (Domain 5). Recite the yellow stickies out loud. Green boxes = do this on a PDI.
+    Red boxes = classic traps. Then timed 50-question drill at the back.
+  </div>
+  <div class="footer-note"><span>not affiliated with ServiceNow · original study notes</span><span>cover</span></div>
+""", "cover"))
+
+# MAP
+html.append(page(f"""
+  {h("The exam map", "spend time where the points live")}
+  <p class="mini">Official CSA Mainline blueprint (updated January 2026). Domains 3 + 4 + 5 = <span class="hl">70% of the paper</span>.</p>
+  <div class="bar" style="margin:10px 0 12px;height:28px;">
+    <span style="width:7%;background:#0d9488;" title="D1"></span>
+    <span style="width:10%;background:#4f46e5;"></span>
+    <span style="width:20%;background:#f59e0b;"></span>
+    <span style="width:20%;background:#e11d48;"></span>
+    <span style="width:30%;background:#7c3aed;"></span>
+    <span style="width:13%;background:#0284c7;"></span>
+  </div>
+  <div class="grid-2">
+    <div class="card tint-d5">
+      <div class="badge">DOMAIN 5 · 30%</div>
+      <h3>Database + security</h3>
+      <ul class="tight">
+        <li>Data schema / dictionary / sys_id</li>
+        <li>ACLs (AND vs OR)</li>
+        <li>Import Sets + <b>coalesce</b></li>
+        <li>CMDB + CSDM</li>
+        <li>Security Center</li>
+        <li>Shared Responsibility</li>
+      </ul>
+    </div>
+    <div>
+      <div class="card tint-d4" style="margin-bottom:8px;">
+        <div class="badge" style="background:#e11d48;">DOMAIN 4 · 20%</div>
+        <h3 style="margin:4px 0;">Self-service + automation</h3>
+        <p class="mini">Knowledge · Catalog · Workflow Studio · Virtual Agent</p>
+      </div>
+      <div class="card tint-d3">
+        <div class="badge" style="background:#d97706;">DOMAIN 3 · 20%</div>
+        <h3 style="margin:4px 0;">Collaboration</h3>
+        <p class="mini">Lists · forms · save buttons · tasks · VTBs · reports · notifications</p>
+      </div>
+    </div>
+  </div>
+  <div class="grid-3" style="margin-top:8px;">
+    <div class="card tint-d6"><div class="badge" style="background:#0284c7;">D6 · 13%</div><p class="mini" style="margin-top:6px;">UI Policy · Business Rule · update sets · JavaScript</p></div>
+    <div class="card tint-d2"><div class="badge" style="background:#4f46e5;">D2 · 10%</div><p class="mini" style="margin-top:6px;">Plugins · branding · users/groups/roles · UIs</p></div>
+    <div class="card tint-d1"><div class="badge" style="background:#0d9488;">D1 · 7%</div><p class="mini" style="margin-top:6px;">aPaaS · multi-instance · Next Experience chrome</p></div>
+  </div>
+  {callout("gold", "official sample answers (keep cold)",
+           "<b>Self-Service</b> is for all users &nbsp;·&nbsp; <b>My Groups Work</b> &nbsp;·&nbsp; transform map = Import Set → existing table &nbsp;·&nbsp; variable types &nbsp;·&nbsp; language = <b>JavaScript</b>")}
+  <div class="card soft" style="margin-top:8px;">
+    <div class="kicker">study sequence (not 1→6)</div>
+    <div class="flow" style="margin-top:8px;">
+      <div class="node" style="background:#ede9fe;">05</div><span class="arrow">→</span>
+      <div class="node" style="background:#ffe4e6;">04</div><span class="arrow">→</span>
+      <div class="node" style="background:#fef3c7;">03</div><span class="arrow">→</span>
+      <div class="node" style="background:#e0f2fe;">06</div><span class="arrow">→</span>
+      <div class="node" style="background:#e0e7ff;">02</div><span class="arrow">→</span>
+      <div class="node" style="background:#ccfbf1;">01</div>
+    </div>
+  </div>
+  <div class="footer-note"><span>PDI: developer.servicenow.com · named update set always</span><span>map</span></div>
+"""))
+
+# D1
+html.append(page(f"""
+  {h("01  ·  Platform & navigation", "teal domain · 7% · vocabulary for everything else")}
+  <div class="grid-2">
+    <div class="card tint-d1">
+      <h3>What is ServiceNow?</h3>
+      <p>Cloud <span class="hl-mint"><b>aPaaS</b></span> — they host it, you configure it.</p>
+      <p><span class="hl"><b>Multi-instance</b></span> (not classic multi-tenant DB). Each customer = dedicated app + database.</p>
+      <ul class="tight">
+        <li>Landscape: <b>PROD + DEV/TEST</b></li>
+        <li><b>Clone</b> copies prod → subprod and <span class="hl-pink">overwrites the target</span></li>
+        <li><b>Now Support (HI)</b> = upgrades, some plugins, clones, cases</li>
+        <li><b>PDI</b> = free student instance + demo data</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Who uses it?</h3>
+      {kv_table([
+        ["End user", "Portal / VA / Mobile", "often no role"],
+        ["Fulfiller", "Next Experience", "<span class='mono'>itil</span>"],
+        ["Admin", "Native UI + Security Center", "<span class='mono'>admin</span>"],
+        ["Sec admin", "ACLs", "<span class='mono'>security_admin</span> ↑"],
+      ], ["persona", "UI", "role"])}
+      {callout("exam", "sample item", "<b>Self-Service</b> is available to ALL users. Incident / Change need roles.")}
+    </div>
+  </div>
+  <h2>Next Experience chrome — sketch this from memory</h2>
+  <div class="card tint-ink" style="font-family:IBM Plex Mono,monospace;font-size:9.5pt;white-space:pre;line-height:1.35;">
++---------------- BANNER FRAME ------------------+
+| logo   global search    help    user menu      |
++--------+---------------------------------------+
+|  NAV   |           CONTENT FRAME               |
+| All    |  lists · forms · dashboards           |
+| ★ Fav  |  VTBs · reports · workspaces          |
+| Hist   |                                       |
+| filter |                                       |
++--------+---------------------------------------+</div>
+  <div class="grid-3" style="margin-top:8px;">
+    <div class="card soft"><b>Logo click</b> = home<br><span class="mono">cache.do</span> = flush cache<br><span class="mono">incident.list</span> = open list</div>
+    <div class="card soft"><b>Impersonate</b> = test as them<br><b>Elevate</b> = <span class="mono">security_admin</span> this session only</div>
+    <div class="card soft"><b>Personalization</b> = gear, you<br><b>Customization</b> = logo, everyone</div>
+  </div>
+  <div class="footer-note"><span>Now Mobile = iOS + Android · History ≠ audit log</span><span>D1</span></div>
+"""))
+
+# D2
+html.append(page(f"""
+  {h("02  ·  Instance configuration", "indigo domain · 10% · make the instance yours")}
+  <div class="grid-3">
+    <div class="card tint-d2"><h3>Plugins</h3>
+      <p class="mini">All → System Definition → Plugins. Some need Now Support. Some <b>cannot be undone</b> — sub-prod first. Guided Setup = empty circle not started.</p></div>
+    <div class="card tint-d2"><h3>Branding</h3>
+      <p class="mini">Logo, tab title, colors, theme = <b>customization</b> (update set). Gear settings = <b>personalization</b> (not captured).</p></div>
+    <div class="card tint-d2"><h3>Properties</h3>
+      <p class="mini"><span class="mono">sys_properties.list</span>. Homepages deprecated → dashboards. After change: new session or <span class="mono">cache.do</span>.</p></div>
+  </div>
+  <h2>Users · Groups · Roles — the golden chain</h2>
+  <div class="flow" style="margin:8px 0 10px;">
+    <div class="node" style="background:#c7d2fe;">ROLES<br><span class="mini">permissions</span></div>
+    <span class="arrow">→ sit on</span>
+    <div class="node" style="background:#a5b4fc;">GROUPS<br><span class="mini">sys_user_group</span></div>
+    <span class="arrow">→ contain</span>
+    <div class="node" style="background:#818cf8;color:#fff;">USERS<br><span class="mini">sys_user</span></div>
+  </div>
+  {callout("trap", "don't", "Assign roles directly to every user. Deleting users who own history. Developing in production.")}
+  {callout("gold", "do", "Deactivate users (<span class='mono'>active=false</span>). Roles contain roles (inheritance). Impersonate after every permission change.")}
+  <div class="grid-2">
+    <div>
+      <h3>Role cheat chips</h3>
+      {chips(["admin", "itil", "snc_internal", "approver_user", "catalog_admin", "knowledge_admin", "import_admin", "security_admin ↑", "flow_designer", "report_publisher", "personalize_form"])}
+    </div>
+    <div class="card tint-gold">
+      <h3>Can't see a module?</h3>
+      <ol class="tight">
+        <li>Application menu <b>role</b></li>
+        <li>Module <b>role</b></li>
+        <li>Table <b>ACL</b> (different layer!)</li>
+      </ol>
+    </div>
+  </div>
+  <div class="eq" style="margin-top:10px;">
+    <div class="card tint-ok"><b>Gear on list</b><br>my columns · green dot · personalization</div>
+    <div class="vs">VS</div>
+    <div class="card tint-d2"><b>Configure → List Layout</b><br>everyone on that <b>view</b> · customization</div>
+  </div>
+  <div class="footer-note"><span>Number Maintenance sets INC/CHG prefixes · High Security needs elevate for ACLs</span><span>D2</span></div>
+"""))
+
+# D3 lists/forms
+html.append(page(f"""
+  {h("03  ·  Collaboration — lists & forms", "amber domain · 20% · ‘what happens when I click X’")}
+  <div class="grid-2">
+    <div class="card tint-d3">
+      <h3>List anatomy</h3>
+      <ul class="tight">
+        <li>Row = record · Column = field</li>
+        <li>Breadcrumbs = the filter</li>
+        <li>Filter = <span class="hl">Field + Operator + Value</span></li>
+        <li>Right-click menus: title / column / cell / row / form</li>
+        <li>Double-click cell = list edit (if allowed)</li>
+        <li>Tags ≠ categories ≠ user criteria</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Form anatomy</h3>
+      <ul class="tight">
+        <li>Header buttons · sections · fields</li>
+        <li>Related lists (children pointing here)</li>
+        <li>Activity stream + User Presence</li>
+        <li>Reference field stores <span class="mono">sys_id</span>, shows name</li>
+        <li><b>Dot-walk</b>: Caller → Department → Name</li>
+        <li><b>View</b> = named layout (Default ≠ Self Service)</li>
+      </ul>
+    </div>
+  </div>
+  <h2 class="hand" style="font-size:20pt;color:#b45309;">The save-button board  (write this on your exam scrap paper)</h2>
+  {kv_table([
+    ["<b>Submit</b>", "NEW record", "YES — closes", "creating"],
+    ["<b>Update</b>", "same record", "YES — closes", "existing"],
+    ["<b>Save</b>", "same (or first insert)", "<span class='hl'>NO — stays</span>", "keep working"],
+    ["<b>Insert</b>", "<span class='hl-pink'>NEW sys_id</span> (clone values)", "YES", "form menu"],
+    ["<b>Insert and Stay</b>", "NEW sys_id", "<span class='hl'>NO — stays</span>", "form menu"],
+  ], ["action", "new record?", "form closes?", "when"])}
+  {callout("trap", "Insert ≠ Submit", "Insert from an <b>existing</b> record clones it into a new row. Update ≠ Save (close vs stay).")}
+  <div class="grid-2" style="margin-top:8px;">
+    <div class="sticky sticky-yellow"><div class="sticky-title">comments vs work notes</div>
+      <div class="sticky-body"><b>Additional comments</b> = caller can see (and often gets emailed).<br><b>Work notes</b> = fulfiller only.</div></div>
+    <div class="sticky sticky-green"><div class="sticky-title">missing field?</div>
+      <div class="sticky-body">Check <b>view</b> first, then UI Policy, then field ACL, then dictionary. Don't jump to ACL every time.</div></div>
+  </div>
+  <div class="footer-note"><span>Form Designer = canvas · Form Layout = slushbucket · same result</span><span>D3a</span></div>
+"""))
+
+# D3 tasks/reports
+html.append(page(f"""
+  {h("03  ·  Tasks, VTBs, reports, mail", "still amber · still 20%")}
+  <div class="grid-2">
+    <div class="card tint-d3">
+      <h3>Task table is the parent</h3>
+      <p class="mini"><span class="mono">incident / problem / change_request / sc_request / sc_req_item / sc_task</span> all <b>extend</b> <span class="mono">task</span>.</p>
+      {kv_table([
+        ["<b>My Work</b>", "assigned to <b>me</b>"],
+        ["<b>My Groups Work</b>", "assigned to <b>my group</b>, usually nobody yet"],
+      ])}
+      {callout("exam", "official wording", "The module is <b>My Groups Work</b> — not My Teams Work / Tasks.")}
+    </div>
+    <div class="card">
+      <h3>Clocks on a task</h3>
+      {kv_table([
+        ["SLA", "you ↔ customer"],
+        ["OLA", "internal teams"],
+        ["UC", "you ↔ supplier"],
+        ["Inactivity", "nobody touched it — not a contract"],
+      ])}
+      <p class="mini" style="margin-top:6px;">SLA life: <span class="chip">Start</span> <span class="chip">Pause</span> <span class="chip">Stop</span> · table <span class="mono">task_sla</span></p>
+    </div>
+  </div>
+  <h2>Visual Task Boards</h2>
+  <div class="grid-3">
+    <div class="card tint-gold"><b>Guided</b><br>lanes = a field (State). Drag <b>updates the record</b>.</div>
+    <div class="card"><b>Flexible</b><br>field lanes + extra lanes you add.</div>
+    <div class="card tint-trap"><b>Freeform</b><br>you invent lanes. Does <b>not</b> reliably change Incident State.</div>
+  </div>
+  <div class="grid-2" style="margin-top:8px;">
+    <div class="card tint-d3">
+      <h3>Report Designer tabs</h3>
+      <div class="flow">
+        <div class="node">Data</div><span class="arrow">→</span>
+        <div class="node">Type</div><span class="arrow">→</span>
+        <div class="node">Configure</div><span class="arrow">→</span>
+        <div class="node">Style</div>
+      </div>
+      <p class="mini" style="margin-top:8px;">Recommended share method = <span class="hl"><b>Share</b></span> (users/groups/roles). Publish = public-ish URL. Dashboards replace homepages.</p>
+    </div>
+    <div class="card">
+      <h3>Notifications = 3 tabs</h3>
+      <div class="flow">
+        <div class="node" style="background:#fde68a;">When</div><span class="arrow">→</span>
+        <div class="node" style="background:#fdb4a4;">Who</div><span class="arrow">→</span>
+        <div class="node" style="background:#a7f3d0;">What</div>
+      </div>
+      <p class="mini" style="margin-top:8px;">Usually fired by a <b>system event</b>. Users subscribe in System Settings. Inbound email can <b>create/update</b> a record.</p>
+    </div>
+  </div>
+  <div class="footer-note"><span>Assignment rules: System Policy → Rules → Assignment</span><span>D3b</span></div>
+"""))
+
+# D4
+html.append(page(f"""
+  {h("04  ·  Self-service & automation", "rose domain · 20% · let employees help themselves")}
+  <div class="grid-3">
+    <div class="card tint-d4"><h3>1. Search / chat</h3><p class="mini">Portal, Employee Center, Virtual Agent, Now Mobile</p></div>
+    <div class="card tint-d4"><h3>2. Knowledge?</h3><p class="mini">How-to article. If published + user criteria match → no ticket.</p></div>
+    <div class="card tint-d4"><h3>3. Need something done?</h3><p class="mini">Catalog item or record producer → Flow fulfills it.</p></div>
+  </div>
+  <h2>Catalog family tree  (draw this in the exam)</h2>
+  <div class="card tint-ink" style="margin-bottom:8px;">
+    <div class="flow">
+      <div class="node" style="background:#fb7185;">REQ<br><span class="mini">sc_request · cart</span></div>
+      <span class="arrow">→</span>
+      <div class="node" style="background:#fda4af;color:#111;">RITM<br><span class="mini">sc_req_item · each item</span></div>
+      <span class="arrow">→</span>
+      <div class="node" style="background:#fecdd3;color:#111;">SCTASK<br><span class="mini">sc_task · fulfillers</span></div>
+    </div>
+    <p class="mini" style="margin:8px 0 0;color:#fecdd3;">2 items in one cart = 1 REQ + 2 RITMs. Record producer skips this and writes Incident (or another table) directly.</p>
+  </div>
+  <div class="grid-2">
+    <div class="card">
+      <h3>Item types</h3>
+      {kv_table([
+        ["Catalog Item", "order → REQ/RITM/SCTASK"],
+        ["Record Producer", "creates a row on a <b>target table</b>"],
+        ["Order Guide", "many items, one request"],
+        ["Content Item", "link / knowledge — not an order"],
+      ])}
+      <p class="mini" style="margin-top:6px;">Multiple Choice, Single Line Text, Select Box = <span class="hl"><b>variable types</b></span> (official sample). Variable <b>sets</b> = reuse.</p>
+    </div>
+    <div class="card tint-d4">
+      <h3>Knowledge</h3>
+      <p>Draft → Review → <span class="hl"><b>Published</b></span> (searchable) → Retired.</p>
+      <p><b>Can Read</b> vs <b>Can Contribute</b> user criteria are separate.</p>
+      {callout("trap", "invisible article?", "Not published, or user criteria blocked the reader. Impersonate an ESS user to test.")}
+    </div>
+  </div>
+  <div class="footer-note"><span>Always attach a Flow to catalog items or nobody fulfills them</span><span>D4a</span></div>
+"""))
+
+html.append(page(f"""
+  {h("04  ·  Workflow Studio + Virtual Agent", "rose continued")}
+  <div class="card tint-d4" style="margin-bottom:8px;">
+    <div class="kicker">Workflow Studio is the umbrella name on the 2026 blueprint</div>
+    <div class="grid-3" style="margin-top:8px;">
+      <div><b>Flow Designer</b><br><span class="mini">trigger + actions + wait</span></div>
+      <div><b>PAD / Playbooks</b><br><span class="mini">cross-enterprise agent stages</span></div>
+      <div><b>Workflow Editor</b><br><span class="mini">legacy graph — don't start new here</span></div>
+    </div>
+  </div>
+  <div class="grid-2">
+    <div class="card">
+      <h3>A flow</h3>
+      <div class="flow">
+        <div class="node">Trigger</div><span class="arrow">→</span>
+        <div class="node">Actions</div><span class="arrow">→</span>
+        <div class="node">if / wait / for each</div>
+      </div>
+      <p class="mini" style="margin-top:8px;">Triggers: record · date · Service Catalog · inbound email · SLA task.</p>
+      <p class="mini">Core actions: Create/Update Record, Ask for Approval, Create Catalog Task, Send Email, Look Up, Subflow.</p>
+      <p class="mini">Roles: <span class="mono">flow_designer</span> · <span class="mono">action_designer</span> · <span class="mono">flow_operator</span></p>
+    </div>
+    <div class="eq" style="display:block;">
+      <div class="card tint-ok" style="margin-bottom:8px;"><b>Flow CAN wait</b><br>approval for 2 days, timer, inbound</div>
+      <div class="card tint-trap"><b>Business Rule CANNOT wait</b><br>same database transaction. Use for set-field-on-save.</div>
+    </div>
+  </div>
+  <h2>Virtual Agent</h2>
+  <div class="grid-3">
+    <div class="card tint-gold">Talks to <b>Knowledge + Catalog + records</b></div>
+    <div class="card">Lives on portal, mobile, <b>Teams / Slack</b></div>
+    <div class="card">Can hand off to a <b>live agent</b></div>
+  </div>
+  {callout("tip", "CSA depth", "You will not build an NLU model. You must know VA is a self-service channel equal to portal search.")}
+  <div class="sticky sticky-pink" style="margin-top:10px;transform:rotate(1deg);">
+    <div class="sticky-title">test mantra</div>
+    <div class="sticky-body">Impersonate a user with <b>no itil role</b> after every catalog / knowledge / VA change.</div>
+  </div>
+  <div class="footer-note"><span>Spoke = bundle of Flow actions (often an integration)</span><span>D4b</span></div>
+"""))
+
+# D5 schema + ACL
+html.append(page(f"""
+  {h("05  ·  Data schema", "violet domain · 30% · if you only master one chapter, this one")}
+  <div class="grid-2">
+    <div class="card tint-d5">
+      <h3>Everything is a record in a table</h3>
+      {kv_table([
+        ["Base", "<span class='mono'>task</span>, <span class='mono'>cmdb</span>"],
+        ["Child / extend", "<span class='mono'>incident</span> <b>is-a</b> task"],
+        ["Custom global", "<span class='mono'>u_...</span>"],
+        ["Scoped app", "<span class='mono'>x_company_app_...</span>"],
+      ])}
+      <p class="mini" style="margin-top:6px;"><span class="hl"><b>sys_id</b></span> = 32-char GUID (real key). Number like INC0001 is just a label.</p>
+    </div>
+    <div class="card">
+      <h3>How tables relate</h3>
+      <ul class="tight">
+        <li><b>Extension</b> — Extends table field</li>
+        <li><b>One-to-many</b> — reference field on the many side (Incident.caller → User)</li>
+        <li><b>Many-to-many</b> — join table (task_ci)</li>
+      </ul>
+      <p class="mini">Visualize with the <span class="hl">Schema Map</span> (Tables & Columns). Dictionary = field metadata. <b>Dictionary override</b> = change a parent field on a <b>child only</b>.</p>
+    </div>
+  </div>
+  <h2>ACL sketchnote</h2>
+  <div class="card tint-d5">
+    <div class="grid-3">
+      <div><b class="mono">incident</b><br><span class="mini">row / table (.None)</span></div>
+      <div><b class="mono">incident.*</b><br><span class="mini">fields in general</span></div>
+      <div><b class="mono">incident.work_notes</b><br><span class="mini">that one field</span></div>
+    </div>
+  </div>
+  <div class="grid-2" style="margin-top:8px;">
+    <div class="card tint-ok">
+      <h3>ONE acl record = AND</h3>
+      <p>Roles <b>and</b> condition <b>and</b> script must all pass (empty parts skipped).</p>
+    </div>
+    <div class="card tint-gold">
+      <h3>SEVERAL acls at same spot = OR</h3>
+      <p>Pass <b>any one</b> matching rule at that level.</p>
+    </div>
+  </div>
+  <div class="flow" style="margin-top:10px;">
+    <div class="node">table ACL first</div><span class="arrow">→</span>
+    <div class="node">then field ACL</div><span class="arrow">→</span>
+    <div class="node">table.field beats table.*</div>
+  </div>
+  {callout("trap", "no ACL + High Security default deny", "Access is <b>denied</b>. UI Policy hiding a field is <b>not</b> security. Elevate <span class='mono'>security_admin</span> to create ACLs.")}
+  <div class="footer-note"><span>Dot-walk with the green + in condition builders</span><span>D5a</span></div>
+"""))
+
+html.append(page(f"""
+  {h("05  ·  Import, CMDB, CSDM, security", "violet continued — the rest of the 30%")}
+  <h2>Import Sets</h2>
+  <div class="flow" style="margin-bottom:8px;">
+    <div class="node" style="background:#ddd6fe;">Excel / CSV / JDBC / LDAP</div><span class="arrow">→</span>
+    <div class="node">staging table</div><span class="arrow">→</span>
+    <div class="node" style="background:#fde68a;">Transform Map</div><span class="arrow">→</span>
+    <div class="node" style="background:#bbf7d0;">target table</div>
+  </div>
+  <div class="grid-2">
+    <div class="sticky sticky-yellow"><div class="sticky-title">official definition</div>
+      <div class="sticky-body">A transform map relates <b>Import Set fields</b> to fields on an <b>existing table</b>.</div></div>
+    <div class="sticky sticky-pink"><div class="sticky-title">coalesce</div>
+      <div class="sticky-body">Match key → <b>UPDATE</b>. No match → insert. No coalesce → <b>duplicates</b>. Use email / employee # / serial.</div></div>
+  </div>
+  {callout("tip", "UI Policy vs import", "UI Policies do <b>not</b> run on transform. Use a <b>Data Policy</b> (or dictionary mandatory) if Excel must obey the rule.")}
+  <h2>CMDB + CSDM</h2>
+  <div class="grid-3">
+    <div class="card tint-d5"><b class="mono">cmdb_ci</b><br>configuration items (tangible + intangible)</div>
+    <div class="card tint-d5"><b class="mono">cmdb_rel_ci</b><br>relationships · Dependency Views</div>
+    <div class="card tint-d5"><b>CI Class Manager</b><br>classes, identity, hierarchy</div>
+  </div>
+  <div class="grid-2" style="margin-top:8px;">
+    <div class="card">
+      <p class="mini"><b>Discovery</b> = bottom-up, needs <span class="hl">MID Server</span> in your network.<br>
+      <b>Service Mapping</b> = top-down from a service entry point.<br>
+      <b>CSDM</b> = common vocabulary / best-practice model — not “a plugin that replaces ITSM”.</p>
+    </div>
+    <div class="card mini">
+      <b>Foundation</b> users/locations (usually not CI relationships)<br>
+      <b>Design</b> Business Application<br>
+      <b>Manage tech</b> Application Service + infra CIs<br>
+      <b>Sell/Consume</b> Business Service + catalog<br>
+      Catalog is <span class="hl-pink"><b>not a CMDB table</b></span>
+    </div>
+  </div>
+  <div class="eq" style="margin-top:8px;">
+    <div class="card tint-ok"><b>ServiceNow owns</b><br>data centers, platform software, instance isolation, cloud ops</div>
+    <div class="vs">VS</div>
+    <div class="card tint-trap"><b>You own</b><br>users, roles, ACLs, what data you store, MID Servers, acting on Security Center</div>
+  </div>
+  <p class="mini" style="margin-top:8px;"><b>Security Center</b> = instance security <i>posture</i> dashboard — not Security Incident Response, not firewall CIs.</p>
+  <div class="footer-note"><span>Business Application (design) ≠ Application Service (deployed instance you incident against)</span><span>D5b</span></div>
+"""))
+
+# D6
+html.append(page(f"""
+  {h("06  ·  Logic & moving config", "sky domain · 13% · which tool, and how it travels")}
+  <div class="card tint-d6" style="margin-bottom:8px;">
+    <div class="kicker">decision tree — pick the most specific no-code tool that fits</div>
+    {kv_table([
+      ["Mandatory / visible / read-only <b>on the form</b>", "<b>UI Policy</b> (client)"],
+      ["Same rule on <b>import / API / list edit</b>", "<b>Data Policy</b> (server)"],
+      ["Wait for approval / timer", "<b>Flow</b> (Workflow Studio)"],
+      ["Set a field during save / abort", "<b>before Business Rule</b>"],
+      ["Slow / external", "async BR or Flow + spoke"],
+      ["Browser script / onChange / onSubmit", "<b>Client Script</b>"],
+      ["Stop unauthorized access", "<b>ACL</b> — never UI Policy"],
+      ["Move configuration DEV→TEST", "<b>Update set</b> / app install"],
+      ["Move 10,000 users", "<b>Import Set</b>"],
+    ], ["need", "tool"])}
+  </div>
+  <div class="grid-2">
+    <div class="card">
+      <h3>Business Rule timings</h3>
+      {kv_table([
+        ["before", "validate, set fields, abort, query filter"],
+        ["after", "other records / events — keep short"],
+        ["async", "queued, slow work"],
+        ["display", "<span class='mono'>g_scratchpad</span> for the client"],
+      ])}
+    </div>
+    <div class="card tint-d6">
+      <h3>Client vs server APIs</h3>
+      <p><b>Client:</b> <span class="mono">g_form g_user g_scratchpad</span><br>
+      <b>Server:</b> <span class="mono">current previous gs GlideRecord</span></p>
+      {callout("exam", "language", "The platform is scripted in <b>JavaScript</b> — not Java, not Jelly.")}
+      <p class="mini">GlideRecord inside a Client Script = performance trap. Use GlideAjax + Script Include.</p>
+    </div>
+  </div>
+  <h2>Update set lifecycle</h2>
+  <div class="flow">
+    <div class="node">named set</div><span class="arrow">→</span>
+    <div class="node">do work</div><span class="arrow">→</span>
+    <div class="node">Complete</div><span class="arrow">→</span>
+    <div class="node" style="background:#fde68a;">Preview</div><span class="arrow">→</span>
+    <div class="node" style="background:#bbf7d0;">Commit</div>
+  </div>
+  {callout("trap", "Default update set", "Never migrate Default. Update sets capture <b>config</b>, not incident/user/CMDB data. Clone = whole instance.")}
+  <div class="footer-note"><span>Client Script types: onLoad · onChange · onSubmit · onCellEdit</span><span>D6</span></div>
+"""))
+
+# Comparisons board
+html.append(page(f"""
+  {h("Wall of comparisons", "if two answers look right, this page decides")}
+  <div class="grid-2">
+    <div class="card soft">{kv_table([
+      ["Personalize", "one user · gear · favorites"],
+      ["Customize", "instance · form layout · BR · logo"],
+    ], ["", ""])}</div>
+    <div class="card soft">{kv_table([
+      ["Module role", "sees the menu item"],
+      ["ACL", "sees the record / field"],
+      ["User criteria", "sees catalog / knowledge"],
+    ])}</div>
+    <div class="card soft">{kv_table([
+      ["Knowledge", "how-to · no REQ chain"],
+      ["Catalog item", "REQ → RITM → SCTASK"],
+      ["Record producer", "writes target table"],
+      ["Order guide", "many items, one REQ"],
+    ])}</div>
+    <div class="card soft">{kv_table([
+      ["Update set", "configuration"],
+      ["Import Set", "data + transform map"],
+      ["Clone", "whole instance overwrite"],
+      ["Scoped app", "versioned install"],
+    ])}</div>
+    <div class="card soft">{kv_table([
+      ["CMDB", "CIs + relationships"],
+      ["CSDM", "how to use those classes"],
+      ["Discovery", "bottom-up + MID"],
+      ["Service Mapping", "top-down"],
+    ])}</div>
+    <div class="card soft">{kv_table([
+      ["AuthN", "who are you? local/LDAP/SSO"],
+      ["AuthZ", "what may you do? roles/ACLs"],
+      ["Elevate", "security_admin this session"],
+      ["Impersonate", "test as another user"],
+    ])}</div>
+  </div>
+  {callout("gold", "exam heuristic", "When both could work, pick the <b>most specific platform feature</b>: UI Policy before Client Script · Data Policy if server-side · Flow if it must wait · ACL if it is about access.")}
+  <div class="footer-note"><span>Recite this page out loud the night before</span><span>compare</span></div>
+"""))
+
+# Labs
+html.append(page(f"""
+  {h("PDI lab checklist", "green boxes = do, don't just read")}
+  <p class="mini">Request a Personal Developer Instance. Create update set <span class="mono">CSA Workbook Labs</span>.</p>
+  <div class="grid-2">
+    <div class="card tint-ok">
+      <ol class="tight">
+        <li>Navigator, impersonate Abel Tuter, <span class="mono">incident.list</span></li>
+        <li>Role → group → user (no roles on the user record)</li>
+        <li>Filter + save for a group · gear vs Configure layout</li>
+        <li>Insert and Stay — prove a new number</li>
+        <li>Guided VTB on Incident State</li>
+        <li>Notification When / Who / What</li>
+        <li>Publish a knowledge article, impersonate ESS, retire it</li>
+        <li>Catalog item + flow (approval + SCTASK) → REQ/RITM/SCTASK</li>
+        <li>Record producer → Incident (no REQ)</li>
+      </ol>
+    </div>
+    <div class="card tint-d5">
+      <ol class="tight" start="10">
+        <li>Custom table + Schema Map + related list</li>
+        <li>Elevate · table ACL · field ACL · impersonate</li>
+        <li>CSV import, coalesce email, run twice</li>
+        <li>CI Class Manager + Dependency View</li>
+        <li>Open Security Center · write 5 shared-responsibility bullets</li>
+        <li>UI Policy vs Data Policy vs before BR vs Client Script</li>
+        <li>Complete update set · export XML · Preview</li>
+        <li><b>Capstone:</b> article + catalog flow + producer + report + ACL</li>
+      </ol>
+    </div>
+  </div>
+  {callout("lab", "capstone pass bar", "If you can demo the employee path in 15 minutes (ESS user + fulfiller), you are operationally ready for CSA scenarios.")}
+  <div class="card tint-gold" style="margin-top:10px;">
+    <h3>Exam-day method</h3>
+    <ul class="tight">
+      <li>First pass &lt; 45 min · flag the rest</li>
+      <li>Multi-select: select <b>exactly N</b> — miss one = zero</li>
+      <li>No blanks (no penalty for guessing)</li>
+      <li>Confirm the <b>exam release</b> on docs.servicenow.com</li>
+    </ul>
+  </div>
+  <div class="footer-note"><span>Official prep: Welcome to ServiceNow + Administration Fundamentals</span><span>labs</span></div>
+"""))
+
+# Practice Qs compact
+html.append(page(f"""
+  {h("50 practice answers — drill sheet", "original items · not live exam dumps · 90 min, no partial credit")}
+  <p class="mini">Cover the stem, answer, then check. Full stems live in the markdown workbook Chapter 09.</p>
+  <div class="grid-2 mini">
+    <div class="card soft">
+      <ol class="tight">
+        <li>B multi-instance</li>
+        <li>D Self-Service</li>
+        <li>A banner / nav / content</li>
+        <li>B Impersonate</li>
+        <li>B roles → groups → users</li>
+        <li>B personalization</li>
+        <li>C security_admin</li>
+        <li>C dashboards</li>
+        <li>B field + operator + value</li>
+        <li>D Insert and Stay</li>
+        <li>B My Groups Work</li>
+        <li>A+C Guided + owner</li>
+        <li>B Share</li>
+        <li>B system events</li>
+        <li>A caller-visible comments</li>
+        <li>B user criteria</li>
+        <li>B 1 REQ, 2 RITMs</li>
+        <li>C variable types</li>
+        <li>B producer → target table</li>
+        <li>B order guide = many items</li>
+        <li>C Flow can wait</li>
+        <li>B knowledge + catalog + records</li>
+        <li>A Flow Designer + PAD</li>
+        <li>B sys_id</li>
+        <li>B extension</li>
+      </ol>
+    </div>
+    <div class="card soft">
+      <ol class="tight" start="26">
+        <li>B one-to-many reference</li>
+        <li>B Schema Map</li>
+        <li>A dictionary override</li>
+        <li>B ACL parts AND</li>
+        <li>B field hidden, record opens</li>
+        <li>B default deny</li>
+        <li>A transform map def</li>
+        <li>B coalesce email</li>
+        <li>A+B cmdb_ci + cmdb_rel_ci</li>
+        <li>B CSDM = model / vocab</li>
+        <li>B MID inside your network</li>
+        <li>B customer owns ACLs</li>
+        <li>B Security Center = posture</li>
+        <li>B UI Policy</li>
+        <li>B Data Policy</li>
+        <li>B display BR → g_scratchpad</li>
+        <li>B flows wait, BRs don't</li>
+        <li>C JavaScript</li>
+        <li>B update sets = config</li>
+        <li>B Preview then Commit</li>
+        <li>B named update set</li>
+        <li>B g_form is client</li>
+        <li>B UI Policy ≠ security</li>
+        <li>B catalog ≠ CMDB table</li>
+        <li>B missing module role</li>
+      </ol>
+    </div>
+  </div>
+  <p class="hand" style="font-size:16pt;margin-top:8px;">Target: 45+/50 before you book Pearson.</p>
+  <div class="footer-note"><span>Full stems + explanations: csa-workbook/09-practice-questions-and-explanations.md</span><span>drill</span></div>
+"""))
+
+# Glossary
+html.append(page(f"""
+  {h("Pocket glossary + shortcuts", "last-week skim")}
+  <div class="grid-2 mini">
+    <div class="card tint-ink">
+      <div class="kicker" style="color:#fde68a;">type these in the filter</div>
+      <p class="mono" style="margin-top:8px;line-height:1.7;">
+incident.list<br>
+sys_user.list · sys_user_group.list<br>
+sys_script.list &nbsp;&nbsp;← Business Rules<br>
+sys_script_client.list<br>
+sys_ui_policy.list<br>
+sys_security_acl.list<br>
+sys_update_set.list<br>
+sys_properties.list<br>
+cmdb_ci.list · cmdb_rel_ci.list<br>
+kb_knowledge.list · sc_cat_item.list<br>
+task_sla.list<br>
+cache.do
+      </p>
+    </div>
+    <div>
+      <div class="card soft" style="margin-bottom:8px;">
+        <b>Can't see module</b> → app/module role<br>
+        <b>Can't see record</b> → table ACL / query BR<br>
+        <b>Can't see field</b> → view → UI Policy → field ACL<br>
+        <b>Duplicates</b> → coalesce missing<br>
+        <b>Missing from update set</b> → Default set, or it's data
+      </div>
+      <div class="card tint-gold">
+        <b>Keep current:</b> annual delta exam + CMP fee.<br>
+        Next paths: CIS-ITSM, CAD, CSDM / Data Foundations.
+      </div>
+    </div>
+  </div>
+  <div class="wrap" style="margin-top:10px;">
+    {sticky("MID", "Management, Instrumentation, Discovery — on-network worker", "blue")}
+    {sticky("IRE", "Identification & Reconciliation — stops duplicate CIs", "green")}
+    {sticky("HI", "Now Support portal for instance ops", "yellow")}
+    {sticky("aPaaS", "Application Platform as a Service", "pink")}
+  </div>
+  <div class="card" style="margin-top:12px;text-align:center;">
+    <p class="hand" style="font-size:22pt;margin:0;color:#7c3aed;">you've got this.</p>
+    <p class="mini">Original study notes based on the public CSA exam specification. Confirm details on docs.servicenow.com for your exam release.</p>
+  </div>
+  <div class="footer-note"><span>ServiceNow CSA Visual Study Notes · sketchnote edition</span><span>end</span></div>
+"""))
+
+html.append("</body></html>")
+OUT.write_text("".join(html), encoding="utf-8")
+print("wrote", OUT, "bytes", OUT.stat().st_size)

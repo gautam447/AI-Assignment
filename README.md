@@ -1,6 +1,11 @@
-# Image Classification with Transfer Learning
+Also in this repository:
 
-# Overview
+- Easy textbook PDF: **[csa-workbook/ServiceNow-CSA-Easy-Book.pdf](csa-workbook/ServiceNow-CSA-Easy-Book.pdf)**
+- Colour revision PDF: **[csa-workbook/ServiceNow-CSA-Visual-Study-Notes.pdf](csa-workbook/ServiceNow-CSA-Visual-Study-Notes.pdf)**
+- Markdown chapters: **[csa-workbook/README.md](csa-workbook/README.md)**
+
+
+# Image Classification with Transfer Learning
 
 -> This project demonstrates image classification using transfer learning with MobileNetV2 on the CIFAR-10 dataset. The model leverages a pre-trained convolutional neural network (CNN) and fine-tunes the last 20 layers to improve performance. Data augmentation, dropout, and batch normalization techniques are implemented to enhance generalization.
 
