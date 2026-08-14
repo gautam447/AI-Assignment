@@ -4,7 +4,19 @@
 
 Aligned to the official **CSA Mainline Exam Blueprint (updated January 2026)**.
 
-This is a working study book, not a dump of exam questions. Each chapter explains the topic, why it matters on the exam, how it works on the platform, and how to practice it on a Personal Developer Instance (PDI).
+## Graphical PDF (print / tablet)
+
+Download this first if you want Canva-style student notes:
+
+**[ServiceNow-CSA-Visual-Study-Notes.pdf](ServiceNow-CSA-Visual-Study-Notes.pdf)** — 15 A4 pages, color-coded by domain, sticky notes, flow diagrams, exam traps.
+
+![Cover](pdf/preview-cover.png)
+
+Rebuild from HTML (optional): `python3 pdf/build_visual_notes.py` then print `pdf/csa-visual-notes.html` to PDF.
+
+---
+
+This is a working study book, not a dump of exam questions. Each markdown chapter explains the topic, why it matters on the exam, how it works on the platform, and how to practice it on a Personal Developer Instance (PDI).
 
 ---
 
