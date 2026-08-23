@@ -24,6 +24,59 @@ Do **not** pick E. PR is already adequate. Extra PR spend would waste a lean bud
 
 ---
 
+## How this was decided without the later finance answers
+
+The unanswered questions (last-year profit, industry average, exact launch wallet, loan capacity, last-year ad spend, ROI formula, current TVCs, competitor names, industry growth) were **not required** to pick among A–E. Those five options are strategy choices, not budget models. The answers already given were enough to kill four of them.
+
+### Step 1 — Name what each option is actually testing
+
+| Option | The real bet |
+| --- | --- |
+| A | Awareness first, availability later |
+| B | Availability first *everywhere*, then awareness |
+| C | Availability first *where it already exists*, then expand |
+| D | Wait two years for money, then go national |
+| E | Same as C, but spend more on PR |
+
+This is a sequencing question: **ads vs distribution, national vs regional, now vs later, extra PR or not.**
+
+### Step 2 — Keep only the facts that discriminate those bets
+
+These answers were already in hand. Each one kills at least one option.
+
+| Given fact | What it decides |
+| --- | --- |
+| “Advertisements without distribution reach could be lethal.” | Kills **A**. National ads into empty North/Central/East shelves is the lethal case. |
+| Reach is strong in South and West; North, Central, East are “not ready for supporting a national campaign.” About 1,500 new dealers are still needed. | Kills **A** again, and shows **B** is over-waiting: half the country can already sell. |
+| “Before launching a product, the distribution system must be at place.” | Confirms ads follow stock, not the reverse. |
+| The company runs on lean budgets and “shows discretion” / prefers lower-cost marketing. National ask is ~Rs 25 Cr ads + ~Rs 10 Cr distribution. | Kills **A** (spend 25 Cr where conversion will fail) and **D** (you do not need two years of silence; a cheaper regional + BTL plan is available). |
+| PR network is already good. “No further effort on PR front are required.” | Kills **E**. Extra PR is the only difference between C and E, and the case already closed that door. |
+| Portfolio has been stale ~10 years. Company wants buzz, WOM, volume, and skim. South and West are “ready to take the sales challenge.” | Kills **B** and **D**. Waiting for a perfect national network, or waiting two years, donates the idea and delays cash. |
+| An expensive European import exists; Rogue will sell at ~1/10th that price. No ambassador planned. Product attributes + WOM are the plan. | Supports a regional test: the story can travel without a national ATL tax. Imitation risk is a reason to move in *ready* markets, not to advertise nationally into empty ones. |
+
+No last-year P&L, ROI formula, or loan answer appears in that table. They were not load-bearing.
+
+### Step 3 — Eliminate, then keep the last option standing
+
+1. **Drop A.** The case already said ads without distribution are lethal, and named the regions that cannot support a national campaign. Imitation is not a license to waste 25 Cr.
+2. **Drop D.** Two years of silence is not required by any given fact. The company can launch where it is already strong, with cheaper regional and BTL work. A decade-stale portfolio cannot wait.
+3. **Drop E.** C and E are the same launch. E only adds PR money. The given answer is that PR needs no further effort.
+4. **Drop B.** Distribution-before-ads is the right *principle*, but B applies it to the whole country. South and West are already ready. Building the remaining 1,500 dealers can happen *in parallel* with a regional launch, which is C, not B.
+5. **Keep C.** It is the only option that uses the ready markets now, fixes the weak markets next, and holds national ATL until both gates are passed.
+
+### Step 4 — What the missing finance answers would have been used for
+
+They would size the *envelope*, not change the *choice*.
+
+- Last-year profit, industry average, ad spend, and “budget available” would tell you **how large** the South/West media pocket can be, and how fast the 1,500 dealers can be added.
+- “Can the company take a loan?” would tell you whether Phase 3 can be debt-funded. It would not justify A (national ads into weak markets) or D (a two-year freeze).
+- ROI method would be how you *measure* the test markets after choosing C. It is not how you pick C.
+- Competitor / imitation / foreign-entry answers would change **speed inside C** (faster dealer addition, tighter secrecy), not flip the answer to A.
+
+If those later answers had shown a huge unused cash pile, C would still win over A: money does not fix empty shelves in the North. If they had shown almost no cash, C would still win over D: regional + BTL is the cheaper way to start, not a two-year blackout.
+
+---
+
 ## Why this is the right call
 
 The case is explicit: **advertising without distribution is lethal.** A national TV burst would create demand in North, Central, and East India, where the network is not ready. Stock-outs, wasted media, and a failed first impression would follow.
