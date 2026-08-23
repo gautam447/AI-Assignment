@@ -4,19 +4,23 @@
 **From:** Marketing Strategy  
 **Subject:** Launch plan for Booze Shampoo under a lean budget
 
-## Recommendation
+## Chosen option
 
-**Do not launch a pan-India ATL campaign first.**  
-**Do not wait two years.**  
-**Do not spend extra on PR.**
+**Option C.**
+
+Go for a regional launch rather than a pan India launch in areas where the company has a reasonably strong distribution reach. Slowly improve the distribution in other markets and couple it with regional and BTL advertisement efforts. Once the product is successful in such test markets, launch a pan India campaign.
+
+| | Option | Verdict |
+| --- | --- | --- |
+| A | Immediately launch a pan India advertisement campaign as competitors might imitate the product. Slowly build up a strong distribution muscle to complement the campaign. | Reject |
+| B | First build a strong distribution muscle, then go for a nationwide advertisement campaign. | Reject |
+| **C** | **Regional launch in strong-distribution markets, regional + BTL ads, then pan-India once test markets work.** | **Choose this** |
+| D | Defer the product launch for two years without any media or PR promotion. Once the company has requisite budgets, launch aggressively with a pan India campaign. | Reject |
+| E | Same as C, plus set aside more budgets on PR activities. | Reject |
 
 Launch regionally in South and West India, where distribution can already support demand. Back that launch with regional media and BTL. In parallel, add dealers and deepen reach in North, Central, and East India. After the product proves itself in those test markets *and* national distribution is in place, scale to a pan-India campaign.
 
-This is the option that matches the facts:
-
-> Go for a regional launch rather than a pan India launch in areas where the company has a reasonably strong distribution reach. Slowly improve the distribution in other markets and couple it with regional and BTL advertisement efforts. Once the product is successful in such test markets, launch a pan India campaign.
-
-Do **not** choose the near-identical option that adds “set aside more budgets on PR activities.” PR is already adequate. Extra PR spend would waste a lean budget.
+Do **not** pick E. PR is already adequate. Extra PR spend would waste a lean budget.
 
 ---
 
@@ -80,14 +84,14 @@ A full **Rs 25 Cr** national media plan should not be committed on day one. Fund
 
 ---
 
-## Options rejected
+## Why the other options fail
 
 | Option | Why it fails |
 | --- | --- |
-| Immediate pan-India ads, then “slowly” build distribution | Contradicts the case: ads without reach are lethal. Lean budget would be burned in markets that cannot convert. |
-| Build a full national distribution muscle first, then advertise nationwide | Right sequence in principle, but too slow and too binary. South and West can launch now. Waiting for every weak state delays learning, cash, and buzz. |
-| Defer two years with no media or PR | Portfolio has been stale for a decade. The import exists; imitation risk is real. A two-year freeze donates the idea and the moment. |
-| Regional launch **plus extra PR budget** | Same launch logic, wrong spend. PR is already sufficient; further PR money is discretionary waste. |
+| **A** — National ads first, distribution later | Ads without reach are lethal. Lean budget would be burned in North/Central/East, which cannot convert. Imitation risk is real, but empty shelves are worse. |
+| **B** — Full national distribution first, then advertise | Right sequence in principle, but too slow and too binary. South and West can launch now. Waiting for every weak state delays learning, cash, and buzz. |
+| **D** — Defer two years with no media or PR | Portfolio has been stale for a decade. The import exists; imitation risk is real. A two-year freeze donates the idea and the moment. |
+| **E** — Same as C, plus extra PR budget | Same launch logic, wrong spend. PR is already sufficient; further PR money is discretionary waste. |
 
 ---
 
