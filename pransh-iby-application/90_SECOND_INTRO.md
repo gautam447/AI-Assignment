@@ -8,7 +8,7 @@ This script answers all four form prompts in order:
 - **c.** Why you applied
 - **d.** One AI-native business you would launch, and who pays first
 
-**~215 words. Record at a calm pace. Do not add extra lines.** Time it once; if you go past 95 seconds, cut the family sentence, not the business idea.
+**~200 words. Record at a calm pace. Do not add extra lines.** Time it once; if you go past 90 seconds, cut the family sentence, not the business idea.
 
 Upload filename (mandatory): `Pransh Agarwal_IIM Sambalpur_<your 10-digit phone>`
 Example shape: `Kotaro Fukuoka_IIM Ahmedabad_9080249191`
@@ -21,7 +21,7 @@ Good morning. I’m Pransh Agarwal, first-semester MBA in Business Analytics at 
 
 My strength is combining Computer Science — 9.34 CGPA from Chitkara — with twenty months as Operations Manager at Vinay Enterprises. I owned logistics, inventory, and quality end-to-end across 500-plus SKUs, held stock discrepancy under 2%, cut reporting time 40% with dashboards, led a team of eight to a 25% on-time lift, and launched the company’s live web product from zero.
 
-I applied because I’mbesideyou is venture building, not slide decks. You pair a consultant with an engineer and ask them to take an AI-native business to first revenue. I want to own customers, pricing, and P&L, and I can sit with your engineers without a translator.
+I applied because I’mbesideyou is venture building, not slide decks. I want to pair with an engineer, own customers, pricing, and P&L, and sit with your engineers without a translator.
 
 The business I would launch is an AI operations agent for mid-size distributors: it turns tacit inventory rules into a playbook, flags stock-outs and delayed dispatches, and uses a voice agent to chase vendors and customers. The first payer is the owner of a regional distribution warehouse — they already feel a 2% stock error as cash, and they will pay a monthly fee per location to protect working capital.
 
