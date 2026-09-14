@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>EY interview portfolio – OTBI &amp; BI Publisher</title>
+  <style>
+    body { margin:0; font-family:"Segoe UI", Arial, sans-serif; background:#f3f6fa; color:#12263a; }
+    header { background:#0e2a47; color:#fff; padding:36px 32px; }
+    main { padding: 28px 32px 60px; max-width: 1100px; }
+    .grid { display:grid; grid-template-columns: 1fr 1fr; gap:16px; }
+    article { background:#fff; padding:18px; border-radius:10px; box-shadow:0 1px 3px rgba(18,38,58,.08); }
+    a.btn { display:inline-block; margin-top:10px; background:#1f4e79; color:#fff; padding:8px 12px; border-radius:6px; text-decoration:none; }
+    code { background:#e8eef5; padding:2px 6px; border-radius:4px; }
+    @media (max-width: 800px) { .grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Oracle Cloud reporting portfolio</h1>
+    <p>OTBI analyses + BI Publisher reports for an EY Oracle technical interview. Client: Aether Global Industries (demo).</p>
+  </header>
+  <main>
+    <p>As of 2026-09-14: headcount <strong>363</strong>, attrition <strong>3.6%</strong>, open AP <strong>67,189,110</strong>, Jul net pay <strong>2,742,408</strong>.</p>
+    <div class="grid">
+      <article>
+        <h2>OTBI-HCM-01 Workforce</h2>
+        <p>Headcount, hires, exits, attrition by BU/department. Maps to Worker Assignment Real Time.</p>
+        <a class="btn" href="otbi_hcm_workforce.html">Open dashboard</a>
+      </article>
+      <article>
+        <h2>OTBI-FIN-01 Payables aging</h2>
+        <p>Open AP, overdue, aging buckets, supplier spend, invoice source mix.</p>
+        <a class="btn" href="otbi_ap_aging.html">Open dashboard</a>
+      </article>
+      <article>
+        <h2>BIP-HCM-01 Payroll register</h2>
+        <p>Pixel-perfect register, XML data model, email bursting by business unit.</p>
+        <a class="btn" href="bip_payroll_register.html">Open report</a>
+      </article>
+      <article>
+        <h2>BIP-FIN-01 AP invoice register</h2>
+        <p>Auditor-facing invoice listing with approval and payment status.</p>
+        <a class="btn" href="bip_ap_invoice_register.html">Open report</a>
+      </article>
+    </div>
+    <p>Rebuild with <code>python3 src/build_portfolio.py</code>. Design docs live in <code>docs/</code>.</p>
+  </main>
+</body>
+</html>
