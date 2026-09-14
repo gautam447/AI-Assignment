@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Workforce Headcount & Attrition</title>
+  <style>
+    :root { --navy:#12263a; --blue:#1f4e79; --bg:#f3f6fa; --card:#fff; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: "Segoe UI", Arial, sans-serif; background: var(--bg); color: var(--navy); }
+    header { background: linear-gradient(90deg, #0e2a47, #1f4e79); color:#fff; padding: 22px 32px; }
+    header p { margin: 6px 0 0; opacity: .85; font-size: 14px; }
+    nav { display:flex; gap:16px; padding: 10px 32px; background:#0b1c2e; }
+    nav a { color:#d6e4f0; text-decoration:none; font-size: 13px; }
+    main { padding: 24px 32px 48px; }
+    .kpis { display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; }
+    .kpi { background: var(--card); padding: 16px; border-radius: 10px; box-shadow: 0 1px 3px rgba(18,38,58,.08); }
+    .lbl { margin:0; font-size:12px; color:#5b6770; text-transform: uppercase; letter-spacing:.04em; }
+    .val { margin: 6px 0 0; font-size: 28px; font-weight: 650; }
+    .sub { margin: 4px 0 0; font-size: 12px; color:#5b6770; }
+    .grid { display:grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+    .panel { background: var(--card); padding: 16px; border-radius: 10px; box-shadow: 0 1px 3px rgba(18,38,58,.08); }
+    .wide { grid-column: 1 / -1; }
+    h2 { margin: 0 0 12px; font-size: 16px; }
+    table { width:100%; border-collapse: collapse; font-size: 13px; }
+    th, td { padding: 8px; border-bottom: 1px solid #e4ebf2; text-align:left; }
+    th { color:#5b6770; font-weight: 600; }
+    .talk { margin-top: 16px; }
+    .bar-row { display:grid; grid-template-columns: 140px 1fr 72px; gap:8px; align-items:center; margin: 8px 0; font-size: 13px; }
+    .bar-track { background:#e4ebf2; height:10px; border-radius: 6px; overflow:hidden; }
+    .bar-fill { display:block; height:100%; background:#1f4e79; }
+    .bar-val { text-align:right; font-variant-numeric: tabular-nums; }
+    @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Workforce Headcount & Attrition</h1>
+    <p>OTBI-HCM-01 · Subject area: Workforce Management - Worker Assignment Real Time · Generated 2026-09-14 19:37 UTC · Demo warehouse, not a live Fusion instance</p>
+  </header>
+  <nav>
+    <a href="index.html">Portfolio home</a>
+    <a href="otbi_hcm_workforce.html">OTBI HCM</a>
+    <a href="otbi_ap_aging.html">OTBI Payables</a>
+    <a href="bip_payroll_register.html">BIP Payroll</a>
+    <a href="bip_ap_invoice_register.html">BIP AP Register</a>
+  </nav>
+  <main>
+    <section class="kpis"><article class='kpi'><p class='lbl'>Headcount</p><p class='val'>363</p><p class='sub'>Active employee assignments as of date</p></article><article class='kpi'><p class='lbl'>Hires (12m)</p><p class='val'>28</p><p class='sub'>PER assignment HIRE actions</p></article><article class='kpi'><p class='lbl'>Exits (12m)</p><p class='val'>13</p><p class='sub'>TERMINATION actions</p></article><article class='kpi'><p class='lbl'>Attrition</p><p class='val'>3.6%</p><p class='sub'>Exits / closing headcount</p></article></section>
+    <div class="grid">
+      <section class='panel'><h2>Headcount by BU</h2><div class='bar-row'><span class='bar-lbl'>Aether US BU</span><span class='bar-track'><span class='bar-fill' style='width:100.0%'></span></span><span class='bar-val'>126</span></div><div class='bar-row'><span class='bar-lbl'>Aether India BU</span><span class='bar-track'><span class='bar-fill' style='width:95.2%'></span></span><span class='bar-val'>120</span></div><div class='bar-row'><span class='bar-lbl'>Aether UK BU</span><span class='bar-track'><span class='bar-fill' style='width:92.9%'></span></span><span class='bar-val'>117</span></div></section><section class='panel'><h2>Exit reasons (12 months)</h2><div class='bar-row'><span class='bar-lbl'>End of Contract</span><span class='bar-track'><span class='bar-fill' style='width:100.0%'></span></span><span class='bar-val'>5</span></div><div class='bar-row'><span class='bar-lbl'>Resignation</span><span class='bar-track'><span class='bar-fill' style='width:80.0%'></span></span><span class='bar-val'>4</span></div><div class='bar-row'><span class='bar-lbl'>Performance</span><span class='bar-track'><span class='bar-fill' style='width:40.0%'></span></span><span class='bar-val'>2</span></div><div class='bar-row'><span class='bar-lbl'>Mutual Separation</span><span class='bar-track'><span class='bar-fill' style='width:40.0%'></span></span><span class='bar-val'>2</span></div></section>
+      <section class='panel wide'><h2>Headcount by business unit</h2><table><thead><tr><th>business_unit</th><th>headcount</th><th>fte</th><th>avg_salary</th></tr></thead><tbody><tr><td>Aether US BU</td><td>126.0</td><td>126.0</td><td>124535.0</td></tr><tr><td>Aether India BU</td><td>120.0</td><td>120.0</td><td>133013.0</td></tr><tr><td>Aether UK BU</td><td>117.0</td><td>117.0</td><td>131280.0</td></tr></tbody></table></section><section class='panel wide'><h2>Gender mix by department</h2><table><thead><tr><th>department</th><th>headcount</th><th>female_hc</th><th>male_hc</th></tr></thead><tbody><tr><td>Internal Audit</td><td>60.0</td><td>19.0</td><td>29.0</td></tr><tr><td>Procurement</td><td>56.0</td><td>24.0</td><td>25.0</td></tr><tr><td>Human Resources</td><td>54.0</td><td>16.0</td><td>21.0</td></tr><tr><td>Information Technology</td><td>52.0</td><td>24.0</td><td>18.0</td></tr><tr><td>Manufacturing</td><td>51.0</td><td>19.0</td><td>17.0</td></tr><tr><td>Finance</td><td>49.0</td><td>14.0</td><td>22.0</td></tr><tr><td>Sales</td><td>41.0</td><td>16.0</td><td>20.0</td></tr></tbody></table></section>
+      <section class="panel talk wide">
+        <h2>Interview talking points</h2>
+        <ul><li>Default as-of date is sysdate; past/future uses SET VARIABLE PARAM_EFFECTIVE_DATE.</li><li>Grain is assignment (PER_ALL_ASSIGNMENTS_M), not person — dual assignments would double-count if you sum headcount blindly.</li><li>Data security follows HCM roles; a line manager only sees their hierarchy.</li><li>Attrition is not a delivered measure — calculate exits from Work Relationship / action events, then divide by average or closing HC.</li><li>Would not mix this subject area with Payables in one analysis; different Fusion apps.</li></ul>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

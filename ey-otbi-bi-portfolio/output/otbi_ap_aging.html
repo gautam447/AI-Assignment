@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Payables Aging & Supplier Spend</title>
+  <style>
+    :root { --navy:#12263a; --blue:#1f4e79; --bg:#f3f6fa; --card:#fff; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: "Segoe UI", Arial, sans-serif; background: var(--bg); color: var(--navy); }
+    header { background: linear-gradient(90deg, #0e2a47, #1f4e79); color:#fff; padding: 22px 32px; }
+    header p { margin: 6px 0 0; opacity: .85; font-size: 14px; }
+    nav { display:flex; gap:16px; padding: 10px 32px; background:#0b1c2e; }
+    nav a { color:#d6e4f0; text-decoration:none; font-size: 13px; }
+    main { padding: 24px 32px 48px; }
+    .kpis { display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; }
+    .kpi { background: var(--card); padding: 16px; border-radius: 10px; box-shadow: 0 1px 3px rgba(18,38,58,.08); }
+    .lbl { margin:0; font-size:12px; color:#5b6770; text-transform: uppercase; letter-spacing:.04em; }
+    .val { margin: 6px 0 0; font-size: 28px; font-weight: 650; }
+    .sub { margin: 4px 0 0; font-size: 12px; color:#5b6770; }
+    .grid { display:grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+    .panel { background: var(--card); padding: 16px; border-radius: 10px; box-shadow: 0 1px 3px rgba(18,38,58,.08); }
+    .wide { grid-column: 1 / -1; }
+    h2 { margin: 0 0 12px; font-size: 16px; }
+    table { width:100%; border-collapse: collapse; font-size: 13px; }
+    th, td { padding: 8px; border-bottom: 1px solid #e4ebf2; text-align:left; }
+    th { color:#5b6770; font-weight: 600; }
+    .talk { margin-top: 16px; }
+    .bar-row { display:grid; grid-template-columns: 140px 1fr 72px; gap:8px; align-items:center; margin: 8px 0; font-size: 13px; }
+    .bar-track { background:#e4ebf2; height:10px; border-radius: 6px; overflow:hidden; }
+    .bar-fill { display:block; height:100%; background:#1f4e79; }
+    .bar-val { text-align:right; font-variant-numeric: tabular-nums; }
+    @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Payables Aging & Supplier Spend</h1>
+    <p>OTBI-FIN-01 · Subject area: Payables Invoices - Transactions Real Time · Generated 2026-09-14 19:37 UTC · Demo warehouse, not a live Fusion instance</p>
+  </header>
+  <nav>
+    <a href="index.html">Portfolio home</a>
+    <a href="otbi_hcm_workforce.html">OTBI HCM</a>
+    <a href="otbi_ap_aging.html">OTBI Payables</a>
+    <a href="bip_payroll_register.html">BIP Payroll</a>
+    <a href="bip_ap_invoice_register.html">BIP AP Register</a>
+  </nav>
+  <main>
+    <section class="kpis"><article class='kpi'><p class='lbl'>Open invoices</p><p class='val'>902</p><p class='sub'>Unpaid + partial standard invoices</p></article><article class='kpi'><p class='lbl'>Open AP</p><p class='val'>67,189,110</p><p class='sub'>Amount remaining</p></article><article class='kpi'><p class='lbl'>Overdue AP</p><p class='val'>58,646,165</p><p class='sub'>87.3% of open AP</p></article><article class='kpi'><p class='lbl'>Sources</p><p class='val'>4</p><p class='sub'>MANUAL / IDT / FBDI / SCANNED</p></article></section>
+    <div class="grid">
+      <section class='panel'><h2>Aging (amount remaining)</h2><div class='bar-row'><span class='bar-lbl'>Current</span><span class='bar-track'><span class='bar-fill' style='width:18.8%'></span></span><span class='bar-val'>8,542,945</span></div><div class='bar-row'><span class='bar-lbl'>1-30</span><span class='bar-track'><span class='bar-fill' style='width:11.3%'></span></span><span class='bar-val'>5,154,996</span></div><div class='bar-row'><span class='bar-lbl'>31-60</span><span class='bar-track'><span class='bar-fill' style='width:8.6%'></span></span><span class='bar-val'>3,921,213</span></div><div class='bar-row'><span class='bar-lbl'>61-90</span><span class='bar-track'><span class='bar-fill' style='width:9.1%'></span></span><span class='bar-val'>4,114,156</span></div><div class='bar-row'><span class='bar-lbl'>90+</span><span class='bar-track'><span class='bar-fill' style='width:100.0%'></span></span><span class='bar-val'>45,455,800</span></div></section><section class='panel'><h2>Invoiced by source</h2><div class='bar-row'><span class='bar-lbl'>MANUAL</span><span class='bar-track'><span class='bar-fill' style='width:100.0%'></span></span><span class='bar-val'>57,053,344</span></div><div class='bar-row'><span class='bar-lbl'>FBDI</span><span class='bar-track'><span class='bar-fill' style='width:58.9%'></span></span><span class='bar-val'>33,605,291</span></div><div class='bar-row'><span class='bar-lbl'>SCANNED</span><span class='bar-track'><span class='bar-fill' style='width:51.4%'></span></span><span class='bar-val'>29,334,518</span></div><div class='bar-row'><span class='bar-lbl'>IDT</span><span class='bar-track'><span class='bar-fill' style='width:35.7%'></span></span><span class='bar-val'>20,371,306</span></div></section>
+      <section class='panel wide'><h2>Supplier spend</h2><table><thead><tr><th>supplier_name</th><th>category</th><th>invoice_count</th><th>invoiced</th><th>open_amount</th></tr></thead><tbody><tr><td>Summit Professional</td><td>Professional Services</td><td>213</td><td>20230543.99</td><td>9409934.89</td></tr><tr><td>Harbor Travel Desk</td><td>T&amp;E</td><td>206</td><td>19106719.92</td><td>8736391.17</td></tr><tr><td>Vantage IT Services</td><td>IT</td><td>196</td><td>18775000.03</td><td>9024750.53</td></tr><tr><td>Vertex Cloud Hosting</td><td>SaaS</td><td>216</td><td>18475232.93</td><td>7429368.33</td></tr><tr><td>Northwind Facilities</td><td>Facilities</td><td>193</td><td>17935034.16</td><td>9150146.67</td></tr><tr><td>Pinnacle Staffing</td><td>Contingent Labor</td><td>184</td><td>17704387.46</td><td>8255662.36</td></tr><tr><td>Helios Logistics</td><td>Logistics</td><td>191</td><td>16763077.51</td><td>7731109.9</td></tr><tr><td>Aria Office Supplies</td><td>Indirect</td><td>186</td><td>16605855.99</td><td>7451746.51</td></tr></tbody></table></section><section class='panel wide'><h2>Invoice source mix</h2><table><thead><tr><th>invoice_source</th><th>invoice_count</th><th>invoiced</th></tr></thead><tbody><tr><td>MANUAL</td><td>713</td><td>57053344.3</td></tr><tr><td>FBDI</td><td>451</td><td>33605290.52</td></tr><tr><td>SCANNED</td><td>369</td><td>29334518.38</td></tr><tr><td>IDT</td><td>267</td><td>20371305.56</td></tr></tbody></table></section>
+      <section class="panel talk wide">
+        <h2>Interview talking points</h2>
+        <ul><li>Aging is a CASE on due date vs as-of date; keep it in the analysis so Finance can change buckets without a BIP change.</li><li>Amount Remaining is the measure; Invoice Amount would overstate once partial payments exist.</li><li>Validation Status and Approval Status are local dimensions — add a measure from the same subject area if you cross SA.</li><li>OTBI is the ops dashboard; the pixel-perfect AP register for auditors is BIP.</li><li>Schedule the analysis daily to a role, or burst a BIP sibling for BU controllers.</li><li>Do not sum Amount Remaining across INR/GBP/USD. Prompt by BU/ledger or add a USD equivalent measure.</li></ul>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

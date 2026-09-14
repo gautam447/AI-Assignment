@@ -1,0 +1,4 @@
+KEY,TEMPLATE,OUTPUT_FORMAT,OUTPUT_NAME,DEL_CHANNEL,PARAMETER1
+Aether India BU,PAYROLL_REGISTER,PDF,Payroll_Register_Aether_India_BU_Jul-26,EMAIL,controller.india@aether.example
+Aether UK BU,PAYROLL_REGISTER,PDF,Payroll_Register_Aether_UK_BU_Jul-26,EMAIL,controller.uk@aether.example
+Aether US BU,PAYROLL_REGISTER,PDF,Payroll_Register_Aether_US_BU_Jul-26,EMAIL,controller.us@aether.example

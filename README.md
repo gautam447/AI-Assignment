@@ -1,5 +1,7 @@
 # Image Classification with Transfer Learning
 
+Oracle Cloud **OTBI and BI Publisher** interview projects (HCM workforce, AP aging, payroll bursting, AP register) live in [`ey-otbi-bi-portfolio/`](ey-otbi-bi-portfolio/README.md).
+
 # Overview
 
 -> This project demonstrates image classification using transfer learning with MobileNetV2 on the CIFAR-10 dataset. The model leverages a pre-trained convolutional neural network (CNN) and fine-tunes the last 20 layers to improve performance. Data augmentation, dropout, and batch normalization techniques are implemented to enhance generalization.
