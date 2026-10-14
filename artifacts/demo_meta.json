@@ -1,0 +1,115 @@
+{
+  "seed": 11,
+  "days": 3,
+  "pool": 40,
+  "patients": [
+    {
+      "patient_id": "DT-IN-0040",
+      "anchor": 168,
+      "anchor_reason": "after a meal, while glucose is still moving",
+      "p_hyper_fusion": 1.0,
+      "p_hypo": 0.0,
+      "alert_hyper": true,
+      "alert_hypo": false
+    },
+    {
+      "patient_id": "DT-IN-0039",
+      "anchor": 84,
+      "anchor_reason": "before a logged meal",
+      "p_hyper_fusion": 1.0,
+      "p_hypo": 0.0,
+      "alert_hyper": true,
+      "alert_hypo": false
+    },
+    {
+      "patient_id": "DT-IN-0004",
+      "anchor": 246,
+      "anchor_reason": "after a meal, while glucose is still moving",
+      "p_hyper_fusion": 0.9626865671641791,
+      "p_hypo": 0.0,
+      "alert_hyper": true,
+      "alert_hypo": false
+    },
+    {
+      "patient_id": "DT-IN-0003",
+      "anchor": 690,
+      "anchor_reason": "after a meal, while glucose is still moving",
+      "p_hyper_fusion": 0.8191489361702128,
+      "p_hypo": 0.0,
+      "alert_hyper": true,
+      "alert_hypo": false
+    },
+    {
+      "patient_id": "DT-IN-0002",
+      "anchor": 456,
+      "anchor_reason": "after a meal, while glucose is still moving",
+      "p_hyper_fusion": 0.6885245901639344,
+      "p_hypo": 0.0,
+      "alert_hyper": true,
+      "alert_hypo": false
+    },
+    {
+      "patient_id": "DT-IN-0021",
+      "anchor": 144,
+      "anchor_reason": "before a logged meal",
+      "p_hyper_fusion": 0.5,
+      "p_hypo": 0.0,
+      "alert_hyper": true,
+      "alert_hypo": false
+    },
+    {
+      "patient_id": "DT-IN-0007",
+      "anchor": 378,
+      "anchor_reason": "before a logged meal",
+      "p_hyper_fusion": 0.34444444444444444,
+      "p_hypo": 0.0,
+      "alert_hyper": true,
+      "alert_hypo": false
+    },
+    {
+      "patient_id": "DT-IN-0005",
+      "anchor": 222,
+      "anchor_reason": "before a logged meal",
+      "p_hyper_fusion": 0.25,
+      "p_hypo": 0.0,
+      "alert_hyper": true,
+      "alert_hypo": false
+    },
+    {
+      "patient_id": "DT-IN-0009",
+      "anchor": 90,
+      "anchor_reason": "before a logged meal",
+      "p_hyper_fusion": 0.1,
+      "p_hypo": 0.0,
+      "alert_hyper": true,
+      "alert_hypo": false
+    },
+    {
+      "patient_id": "DT-IN-0010",
+      "anchor": 834,
+      "anchor_reason": "before a simulated low",
+      "p_hyper_fusion": 0.0,
+      "p_hypo": 0.9166666666666666,
+      "alert_hyper": false,
+      "alert_hypo": true
+    },
+    {
+      "patient_id": "DT-IN-0012",
+      "anchor": 252,
+      "anchor_reason": "before a simulated low",
+      "p_hyper_fusion": 0.0,
+      "p_hypo": 0.8888888888888888,
+      "alert_hyper": false,
+      "alert_hypo": true
+    },
+    {
+      "patient_id": "DT-IN-0037",
+      "anchor": 696,
+      "anchor_reason": "before a simulated low",
+      "p_hyper_fusion": 0.0,
+      "p_hypo": 0.85,
+      "alert_hyper": false,
+      "alert_hypo": true
+    }
+  ]
+}

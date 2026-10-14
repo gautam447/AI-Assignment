@@ -1,0 +1,13 @@
+patient_id,display_name,age,sex,sex_male,city,state,urban,height_cm,weight_kg,bmi,diabetes_years,hba1c_pct,fasting_glucose_mg_dl,ldl_mg_dl,hdl_mg_dl,triglycerides_mg_dl,egfr_ml_min,sbp_mmhg,dbp_mmhg,family_history_t2d,tcf7l2_alleles,cdkal1_alleles,on_metformin,on_sulfonylurea,insulin_total_daily_units,diet_pattern,diet_rice_forward,smoking,schedule_seed,synthetic
+DT-IN-0040,Arjun Iyer,43,Male,1,Bhubaneswar,Odisha,1,173.3,83.2,27.68,1.0,6.94,119.2,124.9,53.3,123.9,108.6,129.0,83.0,0,0,2,1,0,0.0,rice,1,0,1560122938,1
+DT-IN-0039,Imran Patel,78,Male,1,Indore,Madhya Pradesh,1,174.6,99.4,32.61,9.2,9.88,164.8,100.4,42.2,139.9,80.5,136.0,82.0,1,0,0,1,0,0.0,rice,1,0,427592193,1
+DT-IN-0004,Ishita Das,38,Female,0,Bhubaneswar,Odisha,1,159.3,76.9,30.31,7.1,8.32,132.6,96.2,51.5,203.3,87.3,119.0,73.0,0,0,0,1,1,0.0,rice,1,0,1593018608,1
+DT-IN-0003,Meera Nair,60,Female,0,Varanasi,Uttar Pradesh,0,162.2,75.6,28.73,1.5,7.89,114.2,107.2,53.2,182.7,98.2,125.0,79.0,1,0,0,1,0,25.2,mixed,0,1,773776468,1
+DT-IN-0002,Sanjay Mehta,49,Male,1,Nashik,Maharashtra,1,160.5,60.5,23.46,7.7,7.35,104.9,120.8,45.9,95.0,91.3,125.0,83.0,0,0,1,0,0,34.8,mixed,0,0,1006972612,1
+DT-IN-0021,Imran Iyer,54,Male,1,Coimbatore,Tamil Nadu,1,162.0,81.1,30.88,12.0,6.4,117.9,131.4,40.9,117.3,78.5,136.0,78.0,0,1,1,1,0,0.0,mixed,0,0,238379306,1
+DT-IN-0007,Asha Banerjee,34,Female,0,Jaipur,Rajasthan,1,157.9,67.7,27.16,12.4,7.08,124.7,104.6,44.3,144.2,113.3,135.0,77.0,0,1,0,1,0,0.0,mixed,0,0,205026264,1
+DT-IN-0005,Imran Das,46,Male,1,Coimbatore,Tamil Nadu,1,171.3,84.2,28.68,7.1,8.71,161.7,127.1,39.3,142.3,84.2,134.0,83.0,1,0,2,0,0,14.4,rice,1,1,1814709206,1
+DT-IN-0009,Asha Rao,54,Female,0,Bhubaneswar,Odisha,1,156.6,57.7,23.55,0.5,8.5,119.5,92.6,52.2,158.5,98.4,130.0,82.0,0,0,0,1,0,27.3,wheat,0,0,269394457,1
+DT-IN-0010,Yusuf Menon,57,Male,1,Warangal,Telangana,0,175.3,101.3,32.99,5.2,7.2,116.7,112.0,36.0,133.9,92.6,122.0,76.0,0,0,0,1,0,32.6,rice,1,0,778090662,1
+DT-IN-0012,Vihaan Sharma,41,Male,1,Ranchi,Jharkhand,0,169.4,83.4,29.06,2.1,7.73,118.5,87.3,47.3,157.8,86.7,116.0,78.0,0,1,0,1,0,29.8,wheat,0,0,840315934,1
+DT-IN-0037,Pranav Menon,36,Male,1,Pune,Maharashtra,1,169.6,69.3,24.08,3.4,6.55,106.1,100.9,48.2,128.4,111.3,118.0,78.0,0,0,0,1,1,0.0,wheat,0,0,185711974,1
