@@ -1,0 +1,10 @@
+numpy==1.26.4
+pandas==2.2.3
+scikit-learn==1.5.2
+matplotlib==3.9.2
+plotly==5.24.1
+streamlit==1.44.1
+python-pptx==1.0.2
+reportlab==4.2.5
+joblib==1.4.2
+pytest==8.3.3

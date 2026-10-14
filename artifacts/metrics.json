@@ -1,0 +1,845 @@
+{
+  "task": "P(CGM glucose reaches >=180 mg/dL within 2 hours)",
+  "secondary_task": "P(CGM glucose falls below 70 mg/dL within 2 hours)",
+  "units": "mg/dL",
+  "seed": 2026,
+  "n_patients": 320,
+  "days_per_patient": 3,
+  "window_hours": 6,
+  "horizon_hours": 2,
+  "split": "patient-level 70/15/15",
+  "n_windows": {
+    "train": 28672,
+    "val": 6144,
+    "test": 6144
+  },
+  "n_patients_split": {
+    "train": 224,
+    "val": 48,
+    "test": 48
+  },
+  "hyper_prevalence_test": 0.3185,
+  "hypo_prevalence_test": 0.0127,
+  "target_specificity": 0.8,
+  "models": {
+    "persistence": {
+      "auroc": 0.8355,
+      "auprc": 0.791,
+      "sensitivity_at_specificity": 0.7251,
+      "achieved_specificity": 0.8073,
+      "threshold": 0.2411,
+      "ece": 0.0241,
+      "calibration_bins": [
+        {
+          "bin_left": 0.0,
+          "bin_right": 0.1,
+          "count": 522,
+          "mean_predicted": 0.0474,
+          "observed_rate": 0.0939
+        },
+        {
+          "bin_left": 0.1,
+          "bin_right": 0.2,
+          "count": 2900,
+          "mean_predicted": 0.1498,
+          "observed_rate": 0.1317
+        },
+        {
+          "bin_left": 0.2,
+          "bin_right": 0.3,
+          "count": 860,
+          "mean_predicted": 0.2392,
+          "observed_rate": 0.2558
+        },
+        {
+          "bin_left": 0.3,
+          "bin_right": 0.4,
+          "count": 462,
+          "mean_predicted": 0.3304,
+          "observed_rate": 0.3636
+        },
+        {
+          "bin_left": 0.4,
+          "bin_right": 0.5,
+          "count": 223,
+          "mean_predicted": 0.4677,
+          "observed_rate": 0.3901
+        },
+        {
+          "bin_left": 0.5,
+          "bin_right": 0.6,
+          "count": 128,
+          "mean_predicted": 0.5738,
+          "observed_rate": 0.4922
+        },
+        {
+          "bin_left": 0.6,
+          "bin_right": 0.7,
+          "count": 95,
+          "mean_predicted": 0.6506,
+          "observed_rate": 0.5789
+        },
+        {
+          "bin_left": 0.7,
+          "bin_right": 0.8,
+          "count": 6,
+          "mean_predicted": 0.7143,
+          "observed_rate": 0.8333
+        },
+        {
+          "bin_left": 0.8,
+          "bin_right": 0.9,
+          "count": 93,
+          "mean_predicted": 0.8259,
+          "observed_rate": 0.8495
+        },
+        {
+          "bin_left": 0.9,
+          "bin_right": 1.0,
+          "count": 855,
+          "mean_predicted": 0.9981,
+          "observed_rate": 0.993
+        }
+      ],
+      "n": 6144,
+      "prevalence": 0.3185
+    },
+    "static_logistic": {
+      "auroc": 0.7618,
+      "auprc": 0.5968,
+      "sensitivity_at_specificity": 0.5764,
+      "achieved_specificity": 0.8108,
+      "threshold": 0.3848,
+      "ece": 0.0375,
+      "calibration_bins": [
+        {
+          "bin_left": 0.0,
+          "bin_right": 0.1,
+          "count": 512,
+          "mean_predicted": 0.0444,
+          "observed_rate": 0.0684
+        },
+        {
+          "bin_left": 0.1,
+          "bin_right": 0.2,
+          "count": 1920,
+          "mean_predicted": 0.1461,
+          "observed_rate": 0.1448
+        },
+        {
+          "bin_left": 0.2,
+          "bin_right": 0.3,
+          "count": 1024,
+          "mean_predicted": 0.251,
+          "observed_rate": 0.2344
+        },
+        {
+          "bin_left": 0.3,
+          "bin_right": 0.4,
+          "count": 1280,
+          "mean_predicted": 0.3441,
+          "observed_rate": 0.4156
+        },
+        {
+          "bin_left": 0.4,
+          "bin_right": 0.5,
+          "count": 128,
+          "mean_predicted": 0.4444,
+          "observed_rate": 0.5781
+        },
+        {
+          "bin_left": 0.6,
+          "bin_right": 0.7,
+          "count": 896,
+          "mean_predicted": 0.6044,
+          "observed_rate": 0.5368
+        },
+        {
+          "bin_left": 0.7,
+          "bin_right": 0.8,
+          "count": 128,
+          "mean_predicted": 0.7738,
+          "observed_rate": 0.6562
+        },
+        {
+          "bin_left": 0.8,
+          "bin_right": 0.9,
+          "count": 128,
+          "mean_predicted": 0.8142,
+          "observed_rate": 0.8906
+        },
+        {
+          "bin_left": 0.9,
+          "bin_right": 1.0,
+          "count": 128,
+          "mean_predicted": 0.9661,
+          "observed_rate": 0.9297
+        }
+      ],
+      "n": 6144,
+      "prevalence": 0.3185
+    },
+    "wearable_hgb": {
+      "auroc": 0.9477,
+      "auprc": 0.901,
+      "sensitivity_at_specificity": 0.909,
+      "achieved_specificity": 0.8106,
+      "threshold": 0.2327,
+      "ece": 0.0102,
+      "calibration_bins": [
+        {
+          "bin_left": 0.0,
+          "bin_right": 0.1,
+          "count": 2769,
+          "mean_predicted": 0.019,
+          "observed_rate": 0.0141
+        },
+        {
+          "bin_left": 0.1,
+          "bin_right": 0.2,
+          "count": 468,
+          "mean_predicted": 0.1208,
+          "observed_rate": 0.1282
+        },
+        {
+          "bin_left": 0.2,
+          "bin_right": 0.3,
+          "count": 668,
+          "mean_predicted": 0.254,
+          "observed_rate": 0.271
+        },
+        {
+          "bin_left": 0.3,
+          "bin_right": 0.4,
+          "count": 155,
+          "mean_predicted": 0.3665,
+          "observed_rate": 0.4065
+        },
+        {
+          "bin_left": 0.4,
+          "bin_right": 0.5,
+          "count": 279,
+          "mean_predicted": 0.4198,
+          "observed_rate": 0.4014
+        },
+        {
+          "bin_left": 0.5,
+          "bin_right": 0.6,
+          "count": 380,
+          "mean_predicted": 0.5597,
+          "observed_rate": 0.5632
+        },
+        {
+          "bin_left": 0.6,
+          "bin_right": 0.7,
+          "count": 215,
+          "mean_predicted": 0.6845,
+          "observed_rate": 0.6093
+        },
+        {
+          "bin_left": 0.7,
+          "bin_right": 0.8,
+          "count": 166,
+          "mean_predicted": 0.7836,
+          "observed_rate": 0.7831
+        },
+        {
+          "bin_left": 0.8,
+          "bin_right": 0.9,
+          "count": 124,
+          "mean_predicted": 0.8681,
+          "observed_rate": 0.8871
+        },
+        {
+          "bin_left": 0.9,
+          "bin_right": 1.0,
+          "count": 920,
+          "mean_predicted": 0.9931,
+          "observed_rate": 0.9967
+        }
+      ],
+      "n": 6144,
+      "prevalence": 0.3185
+    },
+    "fusion_hgb": {
+      "auroc": 0.9782,
+      "auprc": 0.9535,
+      "sensitivity_at_specificity": 0.9852,
+      "achieved_specificity": 0.8214,
+      "threshold": 0.0979,
+      "ece": 0.0125,
+      "calibration_bins": [
+        {
+          "bin_left": 0.0,
+          "bin_right": 0.1,
+          "count": 3470,
+          "mean_predicted": 0.0109,
+          "observed_rate": 0.0084
+        },
+        {
+          "bin_left": 0.1,
+          "bin_right": 0.2,
+          "count": 65,
+          "mean_predicted": 0.1,
+          "observed_rate": 0.1538
+        },
+        {
+          "bin_left": 0.2,
+          "bin_right": 0.3,
+          "count": 491,
+          "mean_predicted": 0.2323,
+          "observed_rate": 0.2912
+        },
+        {
+          "bin_left": 0.3,
+          "bin_right": 0.4,
+          "count": 108,
+          "mean_predicted": 0.3444,
+          "observed_rate": 0.3519
+        },
+        {
+          "bin_left": 0.4,
+          "bin_right": 0.5,
+          "count": 182,
+          "mean_predicted": 0.4831,
+          "observed_rate": 0.5659
+        },
+        {
+          "bin_left": 0.5,
+          "bin_right": 0.6,
+          "count": 99,
+          "mean_predicted": 0.5608,
+          "observed_rate": 0.5657
+        },
+        {
+          "bin_left": 0.6,
+          "bin_right": 0.7,
+          "count": 247,
+          "mean_predicted": 0.6709,
+          "observed_rate": 0.6518
+        },
+        {
+          "bin_left": 0.7,
+          "bin_right": 0.8,
+          "count": 46,
+          "mean_predicted": 0.7435,
+          "observed_rate": 0.6739
+        },
+        {
+          "bin_left": 0.8,
+          "bin_right": 0.9,
+          "count": 139,
+          "mean_predicted": 0.8441,
+          "observed_rate": 0.777
+        },
+        {
+          "bin_left": 0.9,
+          "bin_right": 1.0,
+          "count": 1297,
+          "mean_predicted": 0.9869,
+          "observed_rate": 0.9854
+        }
+      ],
+      "n": 6144,
+      "prevalence": 0.3185
+    }
+  },
+  "naturalistic_slice_no_logged_action": {
+    "persistence": {
+      "auroc": 0.8366,
+      "auprc": 0.7935,
+      "sensitivity_at_specificity": 0.7299,
+      "achieved_specificity": 0.8051,
+      "threshold": 0.2411,
+      "ece": 0.0246,
+      "calibration_bins": [
+        {
+          "bin_left": 0.0,
+          "bin_right": 0.1,
+          "count": 504,
+          "mean_predicted": 0.0468,
+          "observed_rate": 0.0972
+        },
+        {
+          "bin_left": 0.1,
+          "bin_right": 0.2,
+          "count": 2793,
+          "mean_predicted": 0.1498,
+          "observed_rate": 0.1289
+        },
+        {
+          "bin_left": 0.2,
+          "bin_right": 0.3,
+          "count": 829,
+          "mean_predicted": 0.2393,
+          "observed_rate": 0.2425
+        },
+        {
+          "bin_left": 0.3,
+          "bin_right": 0.4,
+          "count": 443,
+          "mean_predicted": 0.3303,
+          "observed_rate": 0.3589
+        },
+        {
+          "bin_left": 0.4,
+          "bin_right": 0.5,
+          "count": 216,
+          "mean_predicted": 0.4676,
+          "observed_rate": 0.375
+        },
+        {
+          "bin_left": 0.5,
+          "bin_right": 0.6,
+          "count": 123,
+          "mean_predicted": 0.5738,
+          "observed_rate": 0.4797
+        },
+        {
+          "bin_left": 0.6,
+          "bin_right": 0.7,
+          "count": 92,
+          "mean_predicted": 0.6505,
+          "observed_rate": 0.5652
+        },
+        {
+          "bin_left": 0.7,
+          "bin_right": 0.8,
+          "count": 5,
+          "mean_predicted": 0.7143,
+          "observed_rate": 0.8
+        },
+        {
+          "bin_left": 0.8,
+          "bin_right": 0.9,
+          "count": 88,
+          "mean_predicted": 0.826,
+          "observed_rate": 0.8523
+        },
+        {
+          "bin_left": 0.9,
+          "bin_right": 1.0,
+          "count": 843,
+          "mean_predicted": 0.9981,
+          "observed_rate": 0.9929
+        }
+      ],
+      "n": 5936,
+      "prevalence": 0.3162
+    },
+    "static_logistic": {
+      "auroc": 0.7588,
+      "auprc": 0.5926,
+      "sensitivity_at_specificity": 0.5733,
+      "achieved_specificity": 0.8101,
+      "threshold": 0.3848,
+      "ece": 0.0378,
+      "calibration_bins": [
+        {
+          "bin_left": 0.0,
+          "bin_right": 0.1,
+          "count": 494,
+          "mean_predicted": 0.0444,
+          "observed_rate": 0.0709
+        },
+        {
+          "bin_left": 0.1,
+          "bin_right": 0.2,
+          "count": 1858,
+          "mean_predicted": 0.1461,
+          "observed_rate": 0.1459
+        },
+        {
+          "bin_left": 0.2,
+          "bin_right": 0.3,
+          "count": 991,
+          "mean_predicted": 0.251,
+          "observed_rate": 0.2331
+        },
+        {
+          "bin_left": 0.3,
+          "bin_right": 0.4,
+          "count": 1243,
+          "mean_predicted": 0.344,
+          "observed_rate": 0.4111
+        },
+        {
+          "bin_left": 0.4,
+          "bin_right": 0.5,
+          "count": 122,
+          "mean_predicted": 0.4444,
+          "observed_rate": 0.5738
+        },
+        {
+          "bin_left": 0.6,
+          "bin_right": 0.7,
+          "count": 859,
+          "mean_predicted": 0.6043,
+          "observed_rate": 0.5285
+        },
+        {
+          "bin_left": 0.7,
+          "bin_right": 0.8,
+          "count": 124,
+          "mean_predicted": 0.7738,
+          "observed_rate": 0.6532
+        },
+        {
+          "bin_left": 0.8,
+          "bin_right": 0.9,
+          "count": 123,
+          "mean_predicted": 0.8142,
+          "observed_rate": 0.8943
+        },
+        {
+          "bin_left": 0.9,
+          "bin_right": 1.0,
+          "count": 122,
+          "mean_predicted": 0.9661,
+          "observed_rate": 0.9344
+        }
+      ],
+      "n": 5936,
+      "prevalence": 0.3162
+    },
+    "wearable_hgb": {
+      "auroc": 0.9499,
+      "auprc": 0.9036,
+      "sensitivity_at_specificity": 0.9068,
+      "achieved_specificity": 0.8229,
+      "threshold": 0.2327,
+      "ece": 0.0124,
+      "calibration_bins": [
+        {
+          "bin_left": 0.0,
+          "bin_right": 0.1,
+          "count": 2741,
+          "mean_predicted": 0.0187,
+          "observed_rate": 0.0142
+        },
+        {
+          "bin_left": 0.1,
+          "bin_right": 0.2,
+          "count": 449,
+          "mean_predicted": 0.1207,
+          "observed_rate": 0.1314
+        },
+        {
+          "bin_left": 0.2,
+          "bin_right": 0.3,
+          "count": 645,
+          "mean_predicted": 0.2539,
+          "observed_rate": 0.2775
+        },
+        {
+          "bin_left": 0.3,
+          "bin_right": 0.4,
+          "count": 144,
+          "mean_predicted": 0.3667,
+          "observed_rate": 0.4167
+        },
+        {
+          "bin_left": 0.4,
+          "bin_right": 0.5,
+          "count": 260,
+          "mean_predicted": 0.4192,
+          "observed_rate": 0.4231
+        },
+        {
+          "bin_left": 0.5,
+          "bin_right": 0.6,
+          "count": 351,
+          "mean_predicted": 0.5597,
+          "observed_rate": 0.5897
+        },
+        {
+          "bin_left": 0.6,
+          "bin_right": 0.7,
+          "count": 197,
+          "mean_predicted": 0.6845,
+          "observed_rate": 0.6091
+        },
+        {
+          "bin_left": 0.7,
+          "bin_right": 0.8,
+          "count": 155,
+          "mean_predicted": 0.7836,
+          "observed_rate": 0.7806
+        },
+        {
+          "bin_left": 0.8,
+          "bin_right": 0.9,
+          "count": 108,
+          "mean_predicted": 0.8684,
+          "observed_rate": 0.9167
+        },
+        {
+          "bin_left": 0.9,
+          "bin_right": 1.0,
+          "count": 886,
+          "mean_predicted": 0.9941,
+          "observed_rate": 0.9966
+        }
+      ],
+      "n": 5936,
+      "prevalence": 0.3162
+    },
+    "fusion_hgb": {
+      "auroc": 0.9781,
+      "auprc": 0.9526,
+      "sensitivity_at_specificity": 0.9845,
+      "achieved_specificity": 0.8256,
+      "threshold": 0.0979,
+      "ece": 0.0138,
+      "calibration_bins": [
+        {
+          "bin_left": 0.0,
+          "bin_right": 0.1,
+          "count": 3382,
+          "mean_predicted": 0.0107,
+          "observed_rate": 0.0086
+        },
+        {
+          "bin_left": 0.1,
+          "bin_right": 0.2,
+          "count": 60,
+          "mean_predicted": 0.1,
+          "observed_rate": 0.1667
+        },
+        {
+          "bin_left": 0.2,
+          "bin_right": 0.3,
+          "count": 471,
+          "mean_predicted": 0.2323,
+          "observed_rate": 0.2951
+        },
+        {
+          "bin_left": 0.3,
+          "bin_right": 0.4,
+          "count": 104,
+          "mean_predicted": 0.3444,
+          "observed_rate": 0.3558
+        },
+        {
+          "bin_left": 0.4,
+          "bin_right": 0.5,
+          "count": 173,
+          "mean_predicted": 0.4831,
+          "observed_rate": 0.5954
+        },
+        {
+          "bin_left": 0.5,
+          "bin_right": 0.6,
+          "count": 95,
+          "mean_predicted": 0.5605,
+          "observed_rate": 0.5684
+        },
+        {
+          "bin_left": 0.6,
+          "bin_right": 0.7,
+          "count": 236,
+          "mean_predicted": 0.6709,
+          "observed_rate": 0.6525
+        },
+        {
+          "bin_left": 0.7,
+          "bin_right": 0.8,
+          "count": 46,
+          "mean_predicted": 0.7435,
+          "observed_rate": 0.6739
+        },
+        {
+          "bin_left": 0.8,
+          "bin_right": 0.9,
+          "count": 134,
+          "mean_predicted": 0.8446,
+          "observed_rate": 0.7761
+        },
+        {
+          "bin_left": 0.9,
+          "bin_right": 1.0,
+          "count": 1235,
+          "mean_predicted": 0.987,
+          "observed_rate": 0.9846
+        }
+      ],
+      "n": 5936,
+      "prevalence": 0.3162
+    }
+  },
+  "naturalistic_slice_n": 5936,
+  "hypoglycemia_fusion": {
+    "auroc": 0.9636,
+    "auprc": 0.6606,
+    "sensitivity_at_specificity": 0.9487,
+    "achieved_specificity": 0.9278,
+    "threshold": 0.0235,
+    "ece": 0.0039,
+    "calibration_bins": [
+      {
+        "bin_left": 0.0,
+        "bin_right": 0.1,
+        "count": 6009,
+        "mean_predicted": 0.0019,
+        "observed_rate": 0.0032
+      },
+      {
+        "bin_left": 0.1,
+        "bin_right": 0.2,
+        "count": 1,
+        "mean_predicted": 0.148,
+        "observed_rate": 0.0
+      },
+      {
+        "bin_left": 0.2,
+        "bin_right": 0.3,
+        "count": 49,
+        "mean_predicted": 0.2112,
+        "observed_rate": 0.1224
+      },
+      {
+        "bin_left": 0.3,
+        "bin_right": 0.4,
+        "count": 2,
+        "mean_predicted": 0.353,
+        "observed_rate": 0.5
+      },
+      {
+        "bin_left": 0.4,
+        "bin_right": 0.5,
+        "count": 19,
+        "mean_predicted": 0.4268,
+        "observed_rate": 0.3158
+      },
+      {
+        "bin_left": 0.5,
+        "bin_right": 0.6,
+        "count": 2,
+        "mean_predicted": 0.5078,
+        "observed_rate": 0.5
+      },
+      {
+        "bin_left": 0.6,
+        "bin_right": 0.7,
+        "count": 4,
+        "mean_predicted": 0.6766,
+        "observed_rate": 0.75
+      },
+      {
+        "bin_left": 0.7,
+        "bin_right": 0.8,
+        "count": 10,
+        "mean_predicted": 0.7143,
+        "observed_rate": 0.3
+      },
+      {
+        "bin_left": 0.8,
+        "bin_right": 0.9,
+        "count": 23,
+        "mean_predicted": 0.8508,
+        "observed_rate": 0.6522
+      },
+      {
+        "bin_left": 0.9,
+        "bin_right": 1.0,
+        "count": 25,
+        "mean_predicted": 0.97,
+        "observed_rate": 0.96
+      }
+    ],
+    "n": 6144,
+    "prevalence": 0.0127
+  },
+  "lead_time": {
+    "usable_episodes": 314,
+    "detection_rate": 0.9873,
+    "median_lead_min": 100.0,
+    "pct_lead_at_least_30_min": 0.9258,
+    "alerts_per_patient_day": 11.8889,
+    "alert_episodes_per_patient_day": 2.8958,
+    "alert_ppv": 0.5759,
+    "n_detected": 310
+  },
+  "trajectory_mae_mg_dl": {
+    "30": 4.108,
+    "60": 7.1762,
+    "90": 9.1685,
+    "120": 9.8068
+  },
+  "trajectory_residual_sd_mg_dl": {
+    "30": 6.1909,
+    "60": 12.4136,
+    "90": 15.4601,
+    "120": 15.8909
+  },
+  "trajectory_band_coverage": {
+    "30": 0.7941,
+    "60": 0.8646,
+    "90": 0.8376,
+    "120": 0.8241
+  },
+  "group_permutation_auroc_drop": [
+    {
+      "group": "Recent glucose level",
+      "auroc_drop": 0.2456
+    },
+    {
+      "group": "Meal and insulin log",
+      "auroc_drop": 0.1826
+    },
+    {
+      "group": "Time of day",
+      "auroc_drop": 0.0158
+    },
+    {
+      "group": "HbA1c, body size, diabetes duration",
+      "auroc_drop": 0.0118
+    },
+    {
+      "group": "Heart rate, HRV, steps, sleep",
+      "auroc_drop": 0.0035
+    },
+    {
+      "group": "Medications on the chart",
+      "auroc_drop": 0.0023
+    },
+    {
+      "group": "Family history and genetic markers",
+      "auroc_drop": 0.0006
+    },
+    {
+      "group": "Lipids, kidney, blood pressure",
+      "auroc_drop": -0.0003
+    },
+    {
+      "group": "Glucose slope and variability",
+      "auroc_drop": -0.0007
+    }
+  ],
+  "counterfactual_shift_on_rising_windows": {
+    "n": 1487,
+    "mean_p_hyper": 0.3382,
+    "walk_delta": -0.0166,
+    "skip_delta": -0.1061
+  },
+  "fusion_minus_baseline_auroc": {
+    "persistence": {
+      "auroc": 0.8355,
+      "delta_vs_fusion": 0.1428
+    },
+    "static_logistic": {
+      "auroc": 0.7618,
+      "delta_vs_fusion": 0.2164
+    },
+    "wearable_hgb": {
+      "auroc": 0.9477,
+      "delta_vs_fusion": 0.0305
+    },
+    "fusion_hgb": {
+      "auroc": 0.9782,
+      "delta_vs_fusion": 0.0
+    }
+  },
+  "data": "synthetic, seeded, no real patient records",
+  "fusion_training_note": "Fusion and hypoglycemia fits upweight a logged walk or a skipped meal by 3x so those rarer actions are not ignored. Reported test metrics are unweighted. A walk counterfactual in the dashboard resimulates steps; the meal-skip flag is the action the probability model uses directly."
+}

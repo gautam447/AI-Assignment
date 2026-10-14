@@ -1,0 +1,39 @@
+flowchart TB
+  subgraph generators [Synthetic generators, seed 2026]
+    EHR["EHR twin<br/>demographics, meds, labs, TCF7L2, CDKAL1"]
+    PHY["Latent physiology<br/>sensitivity, setpoint, dawn, meal size"]
+    WEAR["Wearable twin, 5 min<br/>CGM, heart rate, RMSSD, steps, sleep"]
+    EHR --> PHY --> WEAR
+  end
+
+  subgraph window [Decision: last 6 hours, next 2 hours]
+    STATIC["Static chart"]
+    SENS["Sensor aggregates"]
+    LOG["Meal and dose log<br/>walk or skipped meal"]
+  end
+
+  EHR --> STATIC
+  WEAR --> SENS
+  WEAR --> LOG
+
+  subgraph models [Held-out by patient]
+    PERS["Persistence logistic<br/>latest CGM only"]
+    STAT["Static logistic regression"]
+    WEAR_M["Wearable gradient boosting"]
+    FUSION["Fusion gradient boosting<br/>plus isotonic calibration"]
+    TRAJ["Trajectory at 30, 60, 90, 120 min"]
+    HYPO["Secondary hypoglycemia model"]
+  end
+
+  SENS --> PERS
+  STATIC --> STAT
+  SENS --> WEAR_M
+  STATIC --> FUSION
+  SENS --> FUSION
+  LOG --> FUSION
+  FUSION --> TRAJ
+  FUSION --> HYPO
+
+  FUSION --> UI["Clinician dashboard<br/>risk, band, drivers, counterfactual"]
+  TRAJ --> UI
+  HYPO --> UI
