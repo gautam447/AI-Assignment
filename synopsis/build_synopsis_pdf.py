@@ -94,8 +94,13 @@ def build_cover() -> Path:
         y = start_y + i * line_gap
         draw.text((x, y), line, font=font, fill=NAVY)
 
-    img.save(COVER_PNG, quality=95)
-    return COVER_PNG
+    # Keep a print-usable but download-friendly cover size.
+    img = img.convert("RGB")
+    img = img.resize((900, 1194), Image.Resampling.LANCZOS)
+    cover_jpg = ASSETS / "cover_updated.jpg"
+    img.save(cover_jpg, quality=72, optimize=True)
+    img.save(COVER_PNG, quality=85)
+    return cover_jpg
 
 
 INTRO_TEXT = (
