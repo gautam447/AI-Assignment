@@ -11,7 +11,7 @@ from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from reportlab.lib.units import inch
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
-from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer
+from reportlab.platypus import ListFlowable, ListItem, Paragraph, SimpleDocTemplate, Spacer
 
 ROOT = Path(__file__).resolve().parent
 ASSETS = Path("/tmp/pdf_assets")
@@ -110,6 +110,11 @@ INTRO_TEXT = (
     "<i>Healthy People 2000</i> document."
 )
 
+OBJECTIVE_PRIMARY = (
+    "To assess the prevalence of polypharmacy among geriatric patients in "
+    "certain conditions."
+)
+
 
 def make_styles():
     styles = getSampleStyleSheet()
@@ -137,6 +142,17 @@ def make_styles():
     )
     styles.add(
         ParagraphStyle(
+            name="SubHead",
+            fontName="LibSerif-Bold",
+            fontSize=12,
+            leading=16,
+            alignment=TA_LEFT,
+            spaceBefore=10,
+            spaceAfter=4,
+        )
+    )
+    styles.add(
+        ParagraphStyle(
             name="BodyJust",
             fontName="LibSerif",
             fontSize=11,
@@ -145,7 +161,32 @@ def make_styles():
             spaceAfter=8,
         )
     )
+    styles.add(
+        ParagraphStyle(
+            name="BulletBody",
+            fontName="LibSerif",
+            fontSize=11,
+            leading=15,
+            alignment=TA_LEFT,
+        )
+    )
     return styles
+
+
+def bullet_list(items, styles):
+    return ListFlowable(
+        [
+            ListItem(Paragraph(item, styles["BulletBody"]), leftIndent=18, bulletColor="black")
+            for item in items
+        ],
+        bulletType="bullet",
+        start="•",
+        leftIndent=20,
+        bulletFontName="LibSerif",
+        bulletFontSize=11,
+        spaceBefore=2,
+        spaceAfter=6,
+    )
 
 
 def build_body_pdf() -> Path:
@@ -166,9 +207,25 @@ def build_body_pdf() -> Path:
         Paragraph("INTRODUCTION AND RATIONALE:-", styles["SectionHead"]),
         Paragraph(INTRO_TEXT, styles["BodyJust"]),
         Paragraph("OBJECTIVES:-", styles["SectionHead"]),
-        Paragraph(
-            "[Content to be added — please provide primary/secondary objectives.]",
-            styles["BodyJust"],
+        Paragraph(f"1. {OBJECTIVE_PRIMARY}", styles["BodyJust"]),
+        Paragraph("Inclusion:-", styles["SubHead"]),
+        bullet_list(
+            [
+                "Hypertension",
+                "Diabetes mellitus",
+                "Asthma",
+            ],
+            styles,
+        ),
+        Paragraph("Exclusion:-", styles["SubHead"]),
+        bullet_list(
+            [
+                "Cancer",
+                "IPD patients",
+                "ICU patients",
+                "Chronic illness",
+            ],
+            styles,
         ),
         Paragraph("REVIEW OF LITERATURE:-", styles["SectionHead"]),
         Paragraph(
