@@ -105,9 +105,9 @@ INTRO_TEXT = (
     "number of studies conducted during the past 10 years have revealed that "
     "patients age 65 and older according to WHO use an average of two to six "
     "prescribed medications and one to 3.4 non-prescribed medications on a regular "
-    "basis.<super>1</super> The problem of polypharmacy is so extensive that it was "
+    "basis. The problem of polypharmacy is so extensive that it was "
     "designated as the principal medication safety issue in the "
-    "<i>Healthy People 2000</i> document.<super>2</super>"
+    "<i>Healthy People 2000</i> document."
 )
 
 
