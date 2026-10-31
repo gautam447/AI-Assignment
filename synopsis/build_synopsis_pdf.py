@@ -98,6 +98,19 @@ def build_cover() -> Path:
     return COVER_PNG
 
 
+INTRO_TEXT = (
+    "Polypharmacy, the concurrent use of multiple prescription or over-the-counter "
+    "medications, is a growing problem in the United States. Although polypharmacy "
+    "may occur in all age groups, it is a common occurrence in elderly people. A "
+    "number of studies conducted during the past 10 years have revealed that "
+    "patients age 65 and older according to WHO use an average of two to six "
+    "prescribed medications and one to 3.4 non-prescribed medications on a regular "
+    "basis.<super>1</super> The problem of polypharmacy is so extensive that it was "
+    "designated as the principal medication safety issue in the "
+    "<i>Healthy People 2000</i> document.<super>2</super>"
+)
+
+
 def make_styles():
     styles = getSampleStyleSheet()
     styles.add(
@@ -127,7 +140,7 @@ def make_styles():
             name="BodyJust",
             fontName="LibSerif",
             fontSize=11,
-            leading=15,
+            leading=16,
             alignment=TA_JUSTIFY,
             spaceAfter=8,
         )
@@ -151,10 +164,7 @@ def build_body_pdf() -> Path:
         Paragraph(TITLE, styles["StudyTitle"]),
         Spacer(1, 8),
         Paragraph("INTRODUCTION AND RATIONALE:-", styles["SectionHead"]),
-        Paragraph(
-            "[Content to be added — please provide the introduction and rationale text.]",
-            styles["BodyJust"],
-        ),
+        Paragraph(INTRO_TEXT, styles["BodyJust"]),
         Paragraph("OBJECTIVES:-", styles["SectionHead"]),
         Paragraph(
             "[Content to be added — please provide primary/secondary objectives.]",
